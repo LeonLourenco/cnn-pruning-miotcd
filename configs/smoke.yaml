@@ -1,0 +1,53 @@
+# SMOKE TEST: mesmo protocolo do default.yaml, apontando para o mini-subconjunto (12 imgs por classe e split).
+# Antes de usar: tar xf data/smoke/smoke.tar -C data/smoke
+# NAO usar para resultados: so valida que o pipeline roda (use --no-pretrained se nao houver internet).
+
+data:
+  split_csv: data/smoke/smoke/split_smoke.csv
+  img_root: data/smoke/smoke/img
+  img_size: 112
+  num_workers: 0
+  classes: [articulated_truck, background, bicycle, bus, car, motorcycle,
+            non-motorized_vehicle, pedestrian, pickup_truck, single_unit_truck, work_van]
+
+model:
+  arch: resnet18
+  pretrained: true            # pesos do ImageNet
+
+baseline:                     # Exp 1
+  epochs: 20
+  batch_size: 32
+  optimizer: sgd
+  lr: 0.01
+  momentum: 0.9
+  weight_decay: 0.0005
+  scheduler: cosine
+
+finetune:                     # Exp 2-6, apos a poda (one-shot)
+  epochs: 5
+  batch_size: 32
+  optimizer: sgd
+  lr: 0.001
+  momentum: 0.9
+  weight_decay: 0.0005
+  scheduler: cosine
+
+selection_metric: f1_macro    # checkpoint escolhido pelo melhor F1-macro na VALIDACAO
+
+seeds: [0]                    # escopo atual; sementes 1 e 2 sao demanda (docs/DEMANDAS.md)
+
+structured:                   # Exp 5 e 6 (Leon)
+  ratio: 0.5                  # fracao de canais removida em cada camada
+  importance: l1              # norma L1 dos filtros
+  ignore: [conv1, fc]         # camadas que nao sao podadas
+
+unstructured:                 # Exp 2-4 (Gabriel) - criterios a definir, ver docs/DEMANDAS.md
+  amounts: [0.3, 0.6, 0.9]
+  scope: null                 # global | layer  (A DEFINIR)
+  ignore: null                # ex.: [conv1, fc] (A DEFINIR)
+
+latency:                      # medido SOMENTE no notebook do Leon, Python nativo do Windows
+  threads: 4
+  batch_sizes: [1, 32]
+  warmup: 50
+  iters: 300
