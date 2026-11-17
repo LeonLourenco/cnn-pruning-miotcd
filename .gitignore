@@ -1,0 +1,28 @@
+# Dados grandes (ficam so na maquina local / dataset privado do Kaggle)
+data/raw/
+data/interim/
+data/processed/
+data/smoke/smoke/
+
+# Pesos e modelos (grandes demais para o Git; compartilhar via Kaggle - docs/KAGGLE.md)
+*.pt
+*.pth
+*.zip
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Claude Code: configuracao pessoal
+.claude/settings.local.json
+
+# Arquivos locais do Claude Code (nunca versionar)
+CLAUDE.md
+.claude/

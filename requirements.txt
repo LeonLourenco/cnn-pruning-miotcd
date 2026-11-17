@@ -1,0 +1,12 @@
+# Versoes testadas no teste de ponta a ponta (17/11/2026): torch 2.15, torchvision 0.29.
+# No Kaggle, usar o torch/torchvision ja instalados na imagem e instalar so o que falta.
+torch>=2.3
+torchvision>=0.18
+torch-pruning==1.6.0   # versao fixa: a API de grupos muda entre versoes
+scikit-learn>=1.3
+numpy>=1.24
+pillow>=10.0
+pyyaml>=6.0
+
+# so para scripts/prepare_split.py (refazer o split)
+imagehash>=4.3
