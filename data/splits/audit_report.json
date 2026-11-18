@@ -1,0 +1,83 @@
+{
+ "S1_esquema": {
+  "ok": true,
+  "detalhe": {
+   "n": 45788,
+   "ids_duplicados": 0,
+   "colunas": [
+    "id",
+    "classe",
+    "split",
+    "grupo",
+    "largura",
+    "altura",
+    "md5",
+    "phash"
+   ]
+  }
+ },
+ "S2_proporcoes": {
+  "ok": true,
+  "detalhe": {
+   "maior_desvio_pp": 0.05
+  }
+ },
+ "S3_suporte_teste": {
+  "ok": true,
+  "detalhe": {
+   "abaixo_do_minimo": {}
+  }
+ },
+ "S4_grupos": {
+  "ok": true,
+  "detalhe": {
+   "grupos_em_mais_de_um_split": 0
+  }
+ },
+ "S5_md5_entre_splits": {
+  "ok": true,
+  "detalhe": {
+   "md5_em_mais_de_um_split": 0
+  }
+ },
+ "S6_quase_duplicatas_entre_splits": {
+  "ok": true,
+  "detalhe": {
+   "distancia_minima": {
+    "train-val": 10,
+    "train-test": 10,
+    "val-test": 10
+   },
+   "limiar": 8
+  }
+ },
+ "S7_rotulos_conflitantes": {
+  "ok": true,
+  "detalhe": {
+   "pares_ate_4_bits_com_classe_diferente": 0
+  }
+ },
+ "D1_imagens": {
+  "ok": true,
+  "detalhe": {
+   "faltando": 0,
+   "ilegiveis": 0,
+   "md5_diferente": 0
+  }
+ },
+ "D2_imagens_fora_do_split": {
+  "ok": true,
+  "detalhe": {
+   "n": 218,
+   "nota": "informativo"
+  }
+ },
+ "D3_smoke": {
+  "ok": true,
+  "detalhe": {
+   "n": 396,
+   "inconsistentes": 0,
+   "faltando": 0
+  }
+ }
+}

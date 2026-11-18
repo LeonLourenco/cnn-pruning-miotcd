@@ -10,3 +10,6 @@ pyyaml>=6.0
 
 # so para scripts/prepare_split.py (refazer o split)
 imagehash>=4.3
+
+# testes
+pytest>=7.0
