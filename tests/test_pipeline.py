@@ -47,11 +47,14 @@ def test_pipeline_ponta_a_ponta(root, smoke_dir, tmp_path):
     assert m5["f1_macro"] == m6["f1_macro"]
     assert m5["params_effective"] == m6["params_total"] < m5["params_total"]
     assert m5["macs_effective"] == m6["macs_measured"] < m5["macs_measured"]
+    with open(os.path.join(res, "exp5_struct_mask_50_s0", "exp5_struct_mask_50_s0_prefinetune_metrics.json")) as fh:
+        assert json.load(fh)["params_effective"] == m6["params_total"]
 
     _run(root, "scripts/aggregate_results.py", "--results", res)
     _run(root, "scripts/analyze_results.py", "--results", res, "--boot", "50")
     with open(os.path.join(res, "analysis_s0.json")) as fh:
         a = json.load(fh)
     assert set(a["experiments"]) == {"exp5_struct_mask_50_s0", "exp6_struct_phys_50_s0"}
+    assert "contraste_raras_f1" in a["experiments"]["exp6_struct_phys_50_s0"]
     assert a["experiments"]["exp6_struct_phys_50_s0"]["f1_macro"]["delta"] == pytest.approx(
         a["experiments"]["exp5_struct_mask_50_s0"]["f1_macro"]["delta"])

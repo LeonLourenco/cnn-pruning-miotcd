@@ -84,7 +84,10 @@ def main():
     save_json(r6, os.path.join(out6, f"{e6}_metrics.json"))
 
     # o Exp 5 e equivalente ao Exp 6: seu custo efetivo e o do modelo fisico
+    # (vale tambem para a avaliacao antes do fine-tuning: mesmos canais zerados)
     eff = {"params_effective": r6["params_total"], "macs_effective": r6["macs_measured"]}
+    pre.update(eff)
+    save_json(pre, os.path.join(out5, f"{e5}_prefinetune_metrics.json"))
     r5 = {"exp": e5, "stage": "final",
           **evaluate_model(model, cfg, loaders, device, effective=eff,
                            pred_path=os.path.join(out5, f"{e5}_predictions_test.csv"))}

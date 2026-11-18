@@ -5,7 +5,10 @@ experimento de poda, a diferenca em relacao ao baseline com intervalo de confian
 95% por bootstrap PAREADO (as mesmas imagens reamostradas para os dois modelos):
   - F1-macro e acuracia;
   - recall, precisao e F1 de cada classe.
-Tambem aplica o teste de McNemar (acertos/erros pareados) na acuracia.
+Tambem aplica o teste de McNemar (acertos/erros pareados) na acuracia e testa a
+pergunta central do trabalho: a queda media de F1 das classes raras (--rare) e maior
+que a das demais? (contraste = media(dF1 raras) - media(dF1 demais); negativo = raras
+perdem mais).
 
 Uma diferenca so e tratada como real quando o intervalo nao contem zero.
 
@@ -62,6 +65,7 @@ def main():
     ap.add_argument("--results", default="results")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--boot", type=int, default=2000)
+    ap.add_argument("--rare", default="bicycle,motorcycle,non-motorized_vehicle")
     a = ap.parse_args()
 
     base_name = f"exp1_baseline_s{a.seed}"
@@ -72,6 +76,7 @@ def main():
     ci = {c: i for i, c in enumerate(classes)}
     y = np.array([ci[base[i][0]] for i in ids])
     pb = np.array([ci[base[i][1]] for i in ids])
+    rare = np.array([c in a.rare.split(",") for c in classes])
     names = ["f1_macro", "accuracy"] + [f"{m}_{c}" for m in ("recall", "precision", "f1") for c in classes]
 
     rng = np.random.default_rng(a.seed)
@@ -95,11 +100,23 @@ def main():
         res = {n: {"delta": float(point[j]), "ci95": [float(lo[j]), float(hi[j])],
                    "significativo": bool(lo[j] > 0 or hi[j] < 0)} for j, n in enumerate(names)}
         res["mcnemar_accuracy"] = mcnemar(pb == y, pe == y)
+        f1_cols = slice(2 + 2 * k, 2 + 3 * k)
+        dpt = point[f1_cols]
+        cont = dpt[rare].mean() - dpt[~rare].mean()
+        cb = boots[:, f1_cols][:, rare].mean(1) - boots[:, f1_cols][:, ~rare].mean(1)
+        clo, chi = np.percentile(cb, [2.5, 97.5])
+        res["contraste_raras_f1"] = {"classes_raras": [c for c, r in zip(classes, rare) if r],
+                                     "delta": float(cont), "ci95": [float(clo), float(chi)],
+                                     "significativo": bool(clo > 0 or chi < 0),
+                                     "prob_raras_perdem_mais": float((cb < 0).mean())}
         out["experiments"][name] = res
         md += [f"## {name}", "",
                f"McNemar (acurácia): p = {res['mcnemar_accuracy']['p_value']:.2g} "
                f"(só o baseline acerta: {res['mcnemar_accuracy']['b']}; só o experimento acerta: "
                f"{res['mcnemar_accuracy']['c']})", "",
+               f"Contraste raras − demais (ΔF1 médio): {100 * cont:+.1f} p.p., IC 95% "
+               f"[{100 * clo:+.1f}, {100 * chi:+.1f}]{' *' if res['contraste_raras_f1']['significativo'] else ''}"
+               f" (negativo = raras perdem mais)", "",
                "| métrica | Δ (p.p.) | IC 95% |", "|---|---:|---|"]
         for n in ["f1_macro", "accuracy"] + [f"f1_{c}" for c in classes] + [f"recall_{c}" for c in classes]:
             r = res[n]
