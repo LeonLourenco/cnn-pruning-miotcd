@@ -23,7 +23,7 @@ baseline:                     # Exp 1
   scheduler: cosine
 
 finetune:                     # Exp 2-6, apos a poda (one-shot)
-  epochs: 5
+  epochs: 10                  # era 5 ate 18/11: F1 de validacao ainda subia na 5a epoca (docs/SPEC.md, sec. 4)
   batch_size: 128
   optimizer: sgd
   lr: 0.001

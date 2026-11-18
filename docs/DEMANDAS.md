@@ -12,7 +12,9 @@ Status: `aberta` · `em andamento` · `feita`. Atualizar este arquivo no mesmo c
 | **Qua 18/11 noite** | Consolidar resultados (D-10); gráficos (D-11) | Revisar resultados e análise |
 | **Qui 19/11** | Slides e ensaio (D-12) | Slides e ensaio (D-12) |
 
-Se o tempo apertar, a ordem de corte é: sementes extras (D-04) → gráficos além da tabela (D-11) → fine-tuning do L1 de 30%.
+Se o tempo apertar, a ordem de corte é: sementes extras (D-04) → gráficos além da tabela (D-11).
+
+**Atenção (18/11):** o fine-tuning agora é de **10 épocas** para todos os experimentos de poda (`configs/default.yaml`). O Gabriel deve partir do repositório atualizado.
 
 ## Demandas
 
@@ -39,4 +41,5 @@ Se o tempo apertar, a ordem de corte é: sementes extras (D-04) → gráficos al
 | F-04 | Base de código: dados, treino, avaliação, poda estruturada, latência, agregação | 17/11 |
 | F-05 | Teste de ponta a ponta no mini-subconjunto (`configs/smoke.yaml`): máscara e físico com saídas idênticas | 17/11 |
 | F-06 | Dataset privado `leonloureno/mio-tcd-subset-46k` no Kaggle + notebook `notebooks/kaggle_pipeline.ipynb` (antiga D-05) | 18/11 |
-| F-07 | Exp 1, 5 e 6 com semente 0 no Kaggle (T4, 26 min). Teste: baseline F1-macro 0,896; Exp 5 e 6 F1-macro 0,821, saídas idênticas (antigas D-05 e D-07) | 18/11 |
+| F-07 | Exp 1 com semente 0 no Kaggle (T4). Teste: baseline F1-macro 0,896 (antiga D-05) | 18/11 |
+| F-08 | Protocolo: fine-tuning de 5 para 10 épocas, porque o F1 de validação do Exp 5 ainda subia na 5ª época (motivo em `docs/SPEC.md`, seção 4). Exp 5 e 6 rodados de novo com 10 épocas | 18/11 |

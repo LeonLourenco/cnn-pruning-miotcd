@@ -38,7 +38,8 @@ Todos os experimentos de poda partem do checkpoint do Exp 1 **da mesma semente**
 
 - ResNet-18 com pesos do ImageNet; `fc` trocada para 11 classes.
 - **Baseline:** SGD (momentum 0,9, weight decay 5e-4), LR 0,01 com cosine, batch 128, **20 épocas**.
-- **Fine-tuning após a poda (Exp 2–6):** poda única (one-shot) e depois **5 épocas**, LR 0,001 com cosine, mesmo otimizador. A máscara fica fixa durante o fine-tuning.
+- **Fine-tuning após a poda (Exp 2–6):** poda única (one-shot) e depois **10 épocas**, LR 0,001 com cosine, mesmo otimizador. A máscara fica fixa durante o fine-tuning.
+  - **Mudança em 18/11 (de 5 para 10 épocas).** Na primeira execução do Exp 5 (semente 0), o F1-macro de validação ainda subia em todas as 5 épocas (0,771 → 0,796 → 0,810 → 0,814 → 0,818), ou seja, o fine-tuning não tinha convergido. Com 5 épocas, parte da queda em relação ao baseline seria falta de treino, não efeito da poda, o que distorce a comparação central do trabalho. A mudança foi feita antes de qualquer execução dos Exp 2–4, então todos os experimentos de poda seguem o mesmo protocolo; o Exp 5 e o Exp 6 foram rodados de novo. Custo: ~3,5 min a mais por experimento na T4.
 - **Seleção do checkpoint:** melhor F1-macro na **validação**. O teste é usado uma única vez, na avaliação final.
 - **Sementes:** escopo atual = 1 semente (0). Sementes 1 e 2 são a demanda D-04.
 - Também se registram as métricas logo após a poda, **antes** do fine-tuning, para mostrar quanto o fine-tuning recupera.
@@ -94,5 +95,5 @@ Critérios a definir pelo Gabriel (demanda D-01). Contrato do código em `src/pr
 - Amostra com teto por classe (5.000).
 - Quase-duplicatas agrupadas por pHash idêntico, sem ID de câmera.
 - Latência em CPU de notebook, não em dispositivo embarcado.
-- Poda one-shot com fine-tuning curto (5 épocas); poda iterativa fica fora.
+- Poda one-shot com fine-tuning de 10 épocas; poda iterativa fica fora.
 - 1 semente no escopo atual (se D-04 não for feita).
