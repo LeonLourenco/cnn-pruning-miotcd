@@ -24,7 +24,7 @@ Se o tempo apertar, a ordem de corte é: sementes extras (D-04) → gráficos al
 | D-02 | Informar o modelo da GPU do desktop do Gabriel e a versão do PyTorch usada | Gabriel | aberta | — |
 | D-03 | **Fechar o protocolo de latência**: confirmar 4 threads, batch 1 e 32, entrada sintética, mediana como valor principal; decidir se mede memória (RAM de pico) | Leon + Gabriel | aberta (em discussão) | — |
 | D-04 | Rodar sementes 1 e 2 em todos os experimentos (média ± desvio) | Ambos | aberta (opcional, se houver tempo) | D-09 |
-| D-06 | Entregar ao Gabriel, para ele rodar **no próprio computador**: o checkpoint `results/exp1_baseline_s0/exp1_baseline_s0.pt` e as imagens (`mio_subset.zip`). Nenhum dos dois vai para o Git (tamanho) | Leon | aberta | — |
+| D-06 | Anexar à Release `dados-baseline-s0` o `exp1_baseline_s0.pt` e o `mio_subset.zip` (guia: `docs/EXECUCAO_LOCAL.md`) | Leon | em andamento | — |
 | D-08 | Benchmark de latência dos 6 modelos no notebook do Leon (Windows nativo) | Leon | aberta | D-03, D-09 |
 | D-09 | Rodar Exp 2, 3 e 4 no próprio computador (o notebook do Kaggle é opcional) | Gabriel | aberta | D-01, D-06 |
 | D-10 | `scripts/aggregate_results.py` com todos os resultados | Leon | aberta | D-08 |
@@ -43,3 +43,4 @@ Se o tempo apertar, a ordem de corte é: sementes extras (D-04) → gráficos al
 | F-06 | Dataset privado `leonloureno/mio-tcd-subset-46k` no Kaggle + notebook `notebooks/kaggle_pipeline.ipynb` (antiga D-05) | 18/11 |
 | F-07 | Exp 1 com semente 0 no Kaggle (T4). Teste: baseline F1-macro 0,896 (antiga D-05) | 18/11 |
 | F-08 | Protocolo: fine-tuning de 5 para 10 épocas, porque o F1 de validação do Exp 5 ainda subia na 5ª época (motivo em `docs/SPEC.md`, seção 4). Exp 5 e 6 rodados de novo com 10 épocas | 18/11 |
+| F-09 | Resultados do Exp 1, 5 e 6 (semente 0) no repositório: F1-macro 0,896 (baseline) e 0,840 (Exp 5 e 6, fine-tuning de 10 épocas). Análise em `docs/RESULTADOS.md` | 18/11 |

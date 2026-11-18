@@ -16,7 +16,9 @@ Trabalho da disciplina de Redes Neurais (UFRPE). Avalia como técnicas e intensi
 - [`docs/SPEC.md`](docs/SPEC.md) — protocolo experimental (fonte única de verdade)
 - [`docs/DEMANDAS.md`](docs/DEMANDAS.md) — pendências, responsáveis e cronograma
 - [`docs/AUDITORIA_DADOS.md`](docs/AUDITORIA_DADOS.md) — escolha da base, limpeza e split
-- [`docs/KAGGLE.md`](docs/KAGGLE.md) — como treinar no Kaggle
+- [`docs/RESULTADOS.md`](docs/RESULTADOS.md) — resultados e análise (parciais)
+- [`docs/EXECUCAO_LOCAL.md`](docs/EXECUCAO_LOCAL.md) — como rodar os Exp 2–4 no próprio computador
+- [`docs/KAGGLE.md`](docs/KAGGLE.md) — como treinar no Kaggle (opcional)
 
 ## Estrutura
 
