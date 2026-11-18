@@ -24,7 +24,6 @@ Se o tempo apertar, a ordem de corte é: sementes extras (D-04) → gráficos al
 | D-02 | Informar o modelo da GPU do desktop do Gabriel e a versão do PyTorch usada | Gabriel | aberta | — |
 | D-03 | **Fechar o protocolo de latência**: confirmar 4 threads, batch 1 e 32, entrada sintética, mediana como valor principal; decidir se mede memória (RAM de pico) | Leon + Gabriel | aberta (em discussão) | — |
 | D-04 | Rodar sementes 1 e 2 em todos os experimentos (média ± desvio) | Ambos | aberta (opcional, se houver tempo) | D-09 |
-| D-06 | Substituir na Release o `exp1_baseline_s0.pt` pelo baseline treinado no **split v2** (o `mio_subset.zip` continua o mesmo) | Leon | aberta | — |
 | D-13 | **Gabriel:** dar `git pull` (split v2, auditoria, testes, métricas efetivas e predições por imagem) e rodar `python -m pytest` antes de continuar; usar o baseline novo quando D-06 for feita. O código da poda L1 não é afetado | Gabriel | aberta | — |
 | D-08 | Benchmark de latência dos 6 modelos no notebook do Leon (Windows nativo) | Leon | aberta | D-03, D-09 |
 | D-09 | Rodar Exp 2, 3 e 4 no próprio computador (o notebook do Kaggle é opcional) | Gabriel | aberta | D-01, D-06 |
@@ -48,3 +47,4 @@ Se o tempo apertar, a ordem de corte é: sementes extras (D-04) → gráficos al
 | F-10 | Split v2: quase-duplicatas (pHash ≤ 8 bits) agrupadas, 218 imagens com rótulo conflitante removidas; auditoria independente (`scripts/audit_data.py`) e 27 testes (`tests/`) | 18/11 |
 | F-11 | Avaliação grava predições por imagem e parâmetros/MACs efetivos; `scripts/analyze_results.py` (bootstrap pareado + McNemar) | 18/11 |
 | F-12 | Exp 1, 5 e 6 (semente 0) com o split v2 (antiga D-14): baseline F1-macro 0,881; Exp 5 e 6 0,837 (−4,5 p.p., IC 95% [−5,3; −3,6]). Contraste raras × demais não significativo. Análise em `docs/RESULTADOS.md` | 18/11 |
+| F-13 | Release `dados-baseline-s0` com o baseline do split v2 (sha256 `3d203903…baad4`, conferido contra o arquivo local) (antiga D-06) | 18/11 |
