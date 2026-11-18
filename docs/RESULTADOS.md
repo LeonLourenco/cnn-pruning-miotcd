@@ -1,21 +1,63 @@
 # Resultados
 
-**Estado (18/11):** resultados do split v1 **descartados** (vazamento de quase-duplicatas, ver `docs/AUDITORIA_DADOS.md`). Exp 1, 5 e 6 sendo refeitos com o split v2. Esta página é preenchida a partir de `results/summary.md` e `results/analysis_s0.md`, gerados pelos scripts — nenhum número é digitado à mão.
+**Estado (18/11):** Exp 1, 5 e 6 com a semente 0 no **split v2** (Kaggle, T4, notebook versão #3). Exp 2–4 (L1) e latência pendentes. Os números vêm de `results/summary.md` e `results/analysis_s0.md`, gerados pelos scripts e conferidos contra as predições por imagem (F1 recalculado = JSON; análise refeita localmente = análise do Kaggle).
 
-## Lições da rodada com o split v1 (registro de processo)
+Teste: 6.869 imagens. IC 95% por bootstrap pareado (2.000 reamostragens). `*` = intervalo não contém zero.
 
-Os números abaixo **não valem como resultado**; ficam só como histórico do que motivou as correções.
+## Visão geral
 
-- Baseline 0,896 de F1-macro; Exp 5/6 0,821 (fine-tuning de 5 épocas) e 0,840 (10 épocas). A curva de validação ainda subia com 5 épocas → protocolo mudou para 10 (`docs/SPEC.md`, seção 4).
-- A primeira leitura ("as classes raras não sofreram mais") estava errada em três pontos:
-  1. **Usava só o recall.** A moto perdia 1,7 p.p. de recall mas 7,6 p.p. de precisão; pelo F1, "não motorizado" tinha a 2ª maior queda.
-  2. **Ignorava a incerteza.** Com 262–342 imagens de teste, as quedas das classes raras tinham margem de ±3 a ±8 p.p.: não distinguíveis de zero.
-  3. **O teste tinha vazamento:** 9,3% das imagens de teste com quase-cópia no treino.
-- O que parecia robusto e será reavaliado no v2: os erros que mais cresceram foram entre classes de veículos parecidos (caminhão articulado → caminhão simples: 84 → 147), e a queda tendia a ser maior nas classes que o baseline já errava mais (correlação 0,49). Hipótese: a poda tira primeiro a capacidade de distinções finas.
+| Exp | F1-macro | Acurácia | Parâmetros (total / não nulos / efetivos) | Tamanho (MB) | Zip (MB) | MACs (medidos / efetivos) |
+|---|---:|---:|---|---:|---:|---|
+| 1 — baseline | 0,881 | 0,887 | 11,18 M / 11,18 M / 11,18 M | 42,7 | 39,6 | 485 M / 485 M |
+| 5 — estruturado, máscara 50% | 0,837 | 0,844 | 11,18 M / 5,64 M / 2,86 M | 42,7 | 20,1 | 485 M / 176 M |
+| 6 — estruturado, físico 50% | 0,837 | 0,844 | 2,86 M / 2,86 M / 2,86 M | 11,0 | 10,2 | 176 M / 176 M |
 
-## Como ler os resultados do v2
+**Diferença Exp 6 − baseline:** F1-macro **−4,5 p.p.** [−5,3; −3,6] \*; acurácia −4,3 p.p. [−5,1; −3,6] \*; McNemar p = 1,3 × 10⁻²⁵ (561 imagens só o baseline acerta; 263 só o Exp 6).
 
-- Métrica principal: F1-macro. Por classe: **F1** (recall e precisão juntos).
-- Uma diferença só é afirmada quando o IC 95% do bootstrap pareado não contém zero (`results/analysis_s0.md`).
-- Custo: usar `params_effective` e `macs_effective` (o Exp 5 tem o custo efetivo do Exp 6).
-- Classes raras: no treino da amostra o desbalanceamento é ~2,9:1, não 149:1 — a conclusão sobre elas vale para esse cenário.
+- **Compressão real só com remoção física.** O Exp 6 tem 26% dos parâmetros, 26% do tamanho e 36% dos MACs do baseline. O Exp 5 tem exatamente as mesmas predições (diferença máxima nas saídas: 2 × 10⁻⁶), mas o arquivo e os MACs medidos não mudam — a economia só aparece no zip e nos valores efetivos.
+- **"Não nulos" engana na máscara:** o Exp 5 tem 5,64 M de pesos não nulos, mas só 2,86 M influenciam a saída; o resto lê canais zerados.
+- **Sem fine-tuning, a poda destrói o modelo:** F1-macro de 0,039 logo após a poda. A validação durante o fine-tuning (0,777 → 0,834) estabiliza nas últimas épocas.
+- O split v2 reduziu o F1 do baseline de 0,896 (split v1, com vazamento) para 0,881: parte do desempenho anterior era memorização de quadros quase iguais.
+
+## Por classe — F1 (baseline → Exp 6)
+
+| Classe | Teste | Baseline | Exp 6 | Δ (p.p.) | IC 95% |
+|---|---:|---:|---:|---:|---|
+| work_van | 745 | 0,878 | 0,790 | **−8,8 \*** | [−10,8; −6,9] |
+| articulated_truck | 743 | 0,862 | 0,790 | −7,2 \* | [−9,5; −5,2] |
+| non-motorized_vehicle *(rara)* | 260 | 0,773 | 0,701 | −7,2 \* | [−11,2; −3,0] |
+| bicycle *(rara)* | 341 | 0,871 | 0,818 | −5,3 \* | [−8,3; −2,5] |
+| car | 747 | 0,863 | 0,811 | −5,2 \* | [−7,3; −3,3] |
+| single_unit_truck | 743 | 0,804 | 0,757 | −4,7 \* | [−6,9; −2,6] |
+| bus | 749 | 0,951 | 0,915 | −3,5 \* | [−5,0; −2,2] |
+| pedestrian | 749 | 0,943 | 0,907 | −3,5 \* | [−5,0; −2,1] |
+| motorcycle *(rara)* | 296 | 0,930 | 0,901 | −2,9 \* | [−5,5; −0,3] |
+| background | 750 | 0,987 | 0,969 | −1,8 \* | [−2,7; −1,0] |
+| pickup_truck | 746 | 0,834 | 0,845 | +1,1 | [−1,1; +3,4] |
+
+## Pergunta central: as classes raras perdem mais?
+
+**Contraste (ΔF1 médio das raras − ΔF1 médio das demais): −0,9 p.p., IC 95% [−3,0; +1,1] — não significativo.** As raras perderam, em média, um pouco mais (−5,1 contra −4,2 p.p.), mas a diferença está dentro do ruído (probabilidade bootstrap de que percam mais: 0,81).
+
+**Leitura:** com a poda estruturada de 50% e 1 semente, **não há evidência de que a frequência da classe determine a perda**. O padrão mais visível é outro — os erros que mais cresceram são entre classes **visualmente parecidas**:
+
+| Confusão | Baseline | Exp 6 |
+|---|---:|---:|
+| work_van → car | 33 | 75 |
+| bus → work_van | 18 | 45 |
+| bicycle → pedestrian | 32 | 53 |
+| articulated_truck → work_van | 5 | 26 |
+| single_unit_truck → articulated_truck | 53 | 71 |
+
+Isso sugere que a poda tira primeiro a capacidade de **distinções finas** (tipos de veículo; bicicleta com ciclista × pedestre — ambiguidade já descrita pelos autores do MIO-TCD). A correlação entre o F1 do baseline e a queda é fraca (0,34), então "classe difícil perde mais" também não é uma regra forte.
+
+## Limitações destes resultados
+
+- 1 semente (D-04): os IC refletem a variação do conjunto de teste, não a do treino.
+- No treino da amostra, o desbalanceamento é ~2,9:1 (não 149:1): o teste da pergunta central tem pouco contraste entre "raras" e "frequentes" por construção.
+- Só a poda estruturada; a comparação com o L1 (Exp 2–4) vai mostrar se o padrão depende da técnica.
+- O `exp5_struct_mask_50_s0_prefinetune_metrics.json` desta execução registra `params_effective`/`macs_effective` iguais aos não nulos (5,64 M / 286 M); o código foi corrigido depois para usar o custo do modelo físico (2,86 M / 176 M). Os demais arquivos já usam o valor certo.
+
+## Histórico: split v1 (descartado)
+
+Com o split v1 (vazamento), o baseline marcava 0,896 e o Exp 5/6 0,821 (5 épocas de fine-tuning) e 0,840 (10 épocas). A primeira leitura ("as raras não sofreram mais") usava só recall, sem intervalos e com vazamento — ver `docs/AUDITORIA_DADOS.md` e o histórico do Git.
