@@ -82,7 +82,8 @@ Cada avaliação grava também `<exp>_predictions_test.csv` (uma linha por image
 - `torch.set_num_threads(4)`, `eval()` + `inference_mode()`, entrada sintética 112×112.
 - Batch 1 (tempo de resposta) e batch 32 (vazão); 50 iterações de aquecimento, 300 medições, divididas em 3 rodadas com ordem alternada dos modelos.
 - Reportar a **mediana** como valor principal.
-- Pontos ainda em discussão: demanda D-03.
+- **Memória não é medida** (decisão de 18/11, D-03): no Windows, a memória de pico do processo é pouco confiável e não muda a conclusão; o custo de memória do modelo é representado pelo tamanho em MB e pelos parâmetros.
+- Protocolo fechado em 18/11 (D-03). Valores em `configs/default.yaml`, seção `latency`.
 
 ## 9. Hardware
 
