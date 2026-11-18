@@ -17,7 +17,10 @@ KEYS = {"exp", "stage", "split", "n_images", "f1_macro", "accuracy", "per_class"
 
 
 def _run(root, *args):
-    r = subprocess.run([sys.executable, *args], cwd=root, capture_output=True, text=True)
+    # simula o terminal do Windows (cp1252): os scripts precisam funcionar mesmo assim
+    env = dict(os.environ, PYTHONIOENCODING="cp1252")
+    r = subprocess.run([sys.executable, *args], cwd=root, capture_output=True,
+                       encoding="utf-8", errors="replace", env=env)
     assert r.returncode == 0, r.stdout[-2000:] + r.stderr[-2000:]
     return r.stdout
 

@@ -23,8 +23,12 @@ import json
 import math
 import os
 import re
+import sys
 
 import numpy as np
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from src.utils import utf8_stdout  # noqa: E402
 
 
 def load_preds(path):
@@ -61,6 +65,7 @@ def mcnemar(correct_a, correct_b):
 
 
 def main():
+    utf8_stdout()
     ap = argparse.ArgumentParser()
     ap.add_argument("--results", default="results")
     ap.add_argument("--seed", type=int, default=0)

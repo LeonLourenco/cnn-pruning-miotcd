@@ -26,10 +26,11 @@ from src.models import build_resnet18  # noqa: E402
 from src.pruning.structured import (apply_mask, check_equivalence, mask_hook,  # noqa: E402
                                     physical_prune, select_channels)
 from src.train import fit  # noqa: E402
-from src.utils import exp_name, get_device, load_config, save_json, set_seed  # noqa: E402
+from src.utils import utf8_stdout, exp_name, get_device, load_config, save_json, set_seed  # noqa: E402
 
 
 def main():
+    utf8_stdout()
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default="configs/default.yaml")
     ap.add_argument("--seed", type=int, default=0)

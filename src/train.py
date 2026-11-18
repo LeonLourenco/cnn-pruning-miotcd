@@ -18,7 +18,7 @@ from sklearn.metrics import f1_score
 
 from src.data import build_loaders
 from src.models import build_resnet18
-from src.utils import exp_name, get_device, load_config, save_json, set_seed
+from src.utils import utf8_stdout, exp_name, get_device, load_config, save_json, set_seed
 
 
 def make_optimizer(model, hp):
@@ -84,6 +84,7 @@ def fit(model, loaders, hp, device, after_step=None, max_batches=None, log_prefi
 
 
 def main():
+    utf8_stdout()
     ap = argparse.ArgumentParser(description="Treina o baseline denso (Exp 1)")
     ap.add_argument("--config", default="configs/default.yaml")
     ap.add_argument("--seed", type=int, default=0)

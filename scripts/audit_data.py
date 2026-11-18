@@ -32,6 +32,7 @@ import sys
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from src.utils import utf8_stdout  # noqa: E402
 from src.dedup import hex_to_uint64, min_cross_distance, near_pairs  # noqa: E402
 
 CLASSES = ["articulated_truck", "background", "bicycle", "bus", "car", "motorcycle",
@@ -150,6 +151,7 @@ def check_smoke(rows, smoke_dir):
 
 
 def main():
+    utf8_stdout()
     ap = argparse.ArgumentParser()
     ap.add_argument("--split", default="data/splits/split.csv")
     ap.add_argument("--img-root", default=None)
