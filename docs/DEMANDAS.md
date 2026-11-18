@@ -21,12 +21,10 @@ Se o tempo apertar, a ordem de corte é: sementes extras (D-04) → gráficos al
 | D-01 | **Definir e implementar a poda L1 não estruturada**: escopo global ou por camada; camadas excluídas; registrar em `configs/default.yaml` e `docs/SPEC.md` (seção 6); implementar `src/pruning/unstructured.py` seguindo o contrato do arquivo | Gabriel | aberta | — |
 | D-02 | Informar o modelo da GPU do desktop do Gabriel e a versão do PyTorch usada | Gabriel | aberta | — |
 | D-03 | **Fechar o protocolo de latência**: confirmar 4 threads, batch 1 e 32, entrada sintética, mediana como valor principal; decidir se mede memória (RAM de pico) | Leon + Gabriel | aberta (em discussão) | — |
-| D-04 | Rodar sementes 1 e 2 em todos os experimentos (média ± desvio) | Ambos | aberta (opcional, se houver tempo) | D-07, D-09 |
-| D-05 | Subir `data/processed/mio_subset.zip` como dataset **privado** no Kaggle e treinar o baseline (`docs/KAGGLE.md`) | Leon | aberta | — |
-| D-06 | Publicar `results/exp1_baseline_s0/` para o Gabriel (o checkpoint não vai para o Git: tamanho) — sugestão: dataset privado no Kaggle ou pasta compartilhada | Leon | aberta | D-05 |
-| D-07 | Rodar Exp 5 e 6 (`scripts/run_structured.py --seed 0`) | Leon | aberta | D-06 |
-| D-08 | Benchmark de latência dos 6 modelos no notebook do Leon (Windows nativo) | Leon | aberta | D-03, D-07, D-09 |
-| D-09 | Rodar Exp 2, 3 e 4 | Gabriel | aberta | D-01, D-06 |
+| D-04 | Rodar sementes 1 e 2 em todos os experimentos (média ± desvio) | Ambos | aberta (opcional, se houver tempo) | D-09 |
+| D-06 | Entregar ao Gabriel, para ele rodar **no próprio computador**: o checkpoint `results/exp1_baseline_s0/exp1_baseline_s0.pt` e as imagens (`mio_subset.zip`). Nenhum dos dois vai para o Git (tamanho) | Leon | aberta | — |
+| D-08 | Benchmark de latência dos 6 modelos no notebook do Leon (Windows nativo) | Leon | aberta | D-03, D-09 |
+| D-09 | Rodar Exp 2, 3 e 4 no próprio computador (o notebook do Kaggle é opcional) | Gabriel | aberta | D-01, D-06 |
 | D-10 | `scripts/aggregate_results.py` com todos os resultados | Leon | aberta | D-08 |
 | D-11 | Gráficos: compressão × F1-macro; recall das classes raras × intensidade de poda; latência × tamanho | Ambos | aberta | D-10 |
 | D-12 | Slides: problema e base, auditoria dos dados, metodologia, resultados, limitações, conclusão | Ambos | aberta | D-10 |
@@ -40,3 +38,5 @@ Se o tempo apertar, a ordem de corte é: sementes extras (D-04) → gráficos al
 | F-03 | Repositório privado no GitHub + convite ao Gabriel | 17/11 |
 | F-04 | Base de código: dados, treino, avaliação, poda estruturada, latência, agregação | 17/11 |
 | F-05 | Teste de ponta a ponta no mini-subconjunto (`configs/smoke.yaml`): máscara e físico com saídas idênticas | 17/11 |
+| F-06 | Dataset privado `leonloureno/mio-tcd-subset-46k` no Kaggle + notebook `notebooks/kaggle_pipeline.ipynb` (antiga D-05) | 18/11 |
+| F-07 | Exp 1, 5 e 6 com semente 0 no Kaggle (T4, 26 min). Teste: baseline F1-macro 0,896; Exp 5 e 6 F1-macro 0,821, saídas idênticas (antigas D-05 e D-07) | 18/11 |
