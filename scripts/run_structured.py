@@ -72,8 +72,6 @@ def main():
     apply_mask(model, plan)  # garantia extra
     torch.save(model, os.path.join(out5, f"{e5}_model.pt"))
     save_json({"exp": e5, "hp": hp, "history": history}, os.path.join(out5, f"{e5}_history.json"))
-    r5 = {"exp": e5, "stage": "final", **evaluate_model(model, cfg, loaders, device)}
-    save_json(r5, os.path.join(out5, f"{e5}_metrics.json"))
 
     # 3) remocao fisica dos mesmos canais -> Exp 6
     model.cpu().eval()
@@ -81,8 +79,16 @@ def main():
     eq = check_equivalence(model, phys, torch.randn(4, 3, *example.shape[2:]))
     torch.save(phys, os.path.join(out6, f"{e6}_model.pt"))
     r6 = {"exp": e6, "stage": "final", "equivalence_vs_exp5": eq,
-          **evaluate_model(phys, cfg, loaders, device)}
+          **evaluate_model(phys, cfg, loaders, device,
+                           pred_path=os.path.join(out6, f"{e6}_predictions_test.csv"))}
     save_json(r6, os.path.join(out6, f"{e6}_metrics.json"))
+
+    # o Exp 5 e equivalente ao Exp 6: seu custo efetivo e o do modelo fisico
+    eff = {"params_effective": r6["params_total"], "macs_effective": r6["macs_measured"]}
+    r5 = {"exp": e5, "stage": "final",
+          **evaluate_model(model, cfg, loaders, device, effective=eff,
+                           pred_path=os.path.join(out5, f"{e5}_predictions_test.csv"))}
+    save_json(r5, os.path.join(out5, f"{e5}_metrics.json"))
 
     print(f"{e5}: f1_macro={r5['f1_macro']:.4f} params_nonzero={r5['params_nonzero']} "
           f"size_mb={r5['size_mb']:.2f}")

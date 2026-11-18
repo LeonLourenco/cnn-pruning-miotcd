@@ -114,7 +114,9 @@ def main():
               os.path.join(out, f"{name}_history.json"))
 
     from src.evaluate import evaluate_model  # import local evita ciclo de imports
-    res = {"exp": name, "stage": "final", **evaluate_model(model, cfg, loaders, device)}
+    res = {"exp": name, "stage": "final",
+           **evaluate_model(model, cfg, loaders, device,
+                            pred_path=os.path.join(out, f"{name}_predictions_test.csv"))}
     save_json(res, os.path.join(out, f"{name}_metrics.json"))
     print(f"{name}: test f1_macro={res['f1_macro']:.4f} acc={res['accuracy']:.4f}")
     print("checkpoint salvo em", os.path.join(out, f"{name}.pt"))

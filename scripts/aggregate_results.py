@@ -16,8 +16,8 @@ import os
 import re
 import statistics
 
-COLS = ["f1_macro", "accuracy", "params_total", "params_nonzero", "weight_sparsity",
-        "size_mb", "size_zip_mb", "macs_measured", "macs_theoretical"]
+COLS = ["f1_macro", "accuracy", "n_images", "params_total", "params_nonzero", "params_effective", "weight_sparsity",
+        "size_mb", "size_zip_mb", "macs_measured", "macs_theoretical", "macs_effective"]
 RARE = ["bicycle", "motorcycle", "non-motorized_vehicle"]
 
 
@@ -59,7 +59,7 @@ def main():
     for r in rows:
         key = (re.sub(r"_s\d+$", "", r["exp"]), r["stage"])
         groups.setdefault(key, []).append(r)
-    show = ["f1_macro", "params_nonzero", "size_mb", "macs_measured",
+    show = ["f1_macro", "params_effective", "size_mb", "macs_effective",
             "recall_bicycle", "recall_motorcycle", "latency_batch_1_median_ms"]
     lines = ["| experimento | etapa | n | " + " | ".join(show) + " |",
              "|---|---|---|" + "---|" * len(show)]

@@ -92,14 +92,43 @@ def predictive_metrics(y, p, classes):
     }
 
 
-def evaluate_model(model, cfg, loaders, device, split="test"):
+def save_predictions(path, ids, y, p, classes):
+    """Uma linha por imagem: necessario para intervalos de confianca pareados
+    (scripts/analyze_results.py)."""
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    with open(path, "w", newline="", encoding="utf-8") as fh:
+        fh.write("id,y_true,y_pred\n")
+        for i, t, q in zip(ids, y.tolist(), p.tolist()):
+            fh.write(f"{i},{classes[t]},{classes[q]}\n")
+
+
+def evaluate_model(model, cfg, loaders, device, split="test", pred_path=None, effective=None):
+    """Avalia o modelo e devolve o dicionario de metricas.
+
+    pred_path: se informado, grava as predicoes por imagem (CSV) nesse caminho.
+    effective: dict opcional {"params_effective": int, "macs_effective": int}.
+        Sem ele, params_effective = params_nonzero e macs_effective = macs_theoretical.
+        A poda estruturada com mascara informa os valores do modelo fisico
+        equivalente: os pesos que leem canais zerados sao nao nulos, mas nao
+        contribuem para a saida (docs/SPEC.md, secao 7).
+    """
     _assert_no_prune_hooks(model)
     model.to(device)
     y, p = predict(model, loaders[split], device)
-    out = {"split": split, **predictive_metrics(y, p, cfg["data"]["classes"])}
+    classes = cfg["data"]["classes"]
+    out = {"split": split, "n_images": int(len(y)), **predictive_metrics(y, p, classes)}
     out.update(count_params(model))
     out.update(model_size_mb(model))
     out.update(count_macs(model, cfg["data"]["img_size"]))
+    out["params_effective"] = out["params_nonzero"]
+    out["macs_effective"] = out["macs_theoretical"]
+    if effective:
+        out.update(effective)
+    if pred_path:
+        ids = [i for i, _ in loaders[split].dataset.items]
+        if len(ids) != len(y):
+            raise RuntimeError("ordem das predicoes nao corresponde ao dataset (loader embaralhado?)")
+        save_predictions(pred_path, ids, y, p, classes)
     return out
 
 
@@ -115,7 +144,8 @@ def main():
     device = get_device()
     model = torch.load(a.model, map_location=device, weights_only=False)
     loaders = build_loaders(cfg, batch_size=256)
-    res = {"exp": a.exp, **evaluate_model(model, cfg, loaders, device, a.split)}
+    pred = os.path.join(a.out_dir, a.exp, f"{a.exp}_predictions_{a.split}.csv")
+    res = {"exp": a.exp, **evaluate_model(model, cfg, loaders, device, a.split, pred_path=pred)}
     save_json(res, os.path.join(a.out_dir, a.exp, f"{a.exp}_metrics.json"))
     print(f"{a.exp}: f1_macro={res['f1_macro']:.4f} params_nonzero={res['params_nonzero']} "
           f"size_mb={res['size_mb']:.2f} macs={res['macs_measured']}")
