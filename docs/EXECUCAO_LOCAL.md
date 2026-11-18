@@ -14,7 +14,7 @@ Com GPU NVIDIA, instale antes o PyTorch com CUDA pelo seletor de https://pytorch
 
 ## 2. Baixar os arquivos grandes (Release do GitHub)
 
-Na página do repositório: **Releases → "Dados e baseline (semente 0) para os Exp 2-4"** (tag `dados-baseline-s0`). Baixe os dois anexos:
+Na página do repositório: **Releases → "Dados e baseline (semente 0) para os Exp 2-4"** (tag `dados-baseline-s0`). Baixe os dois anexos. **Atenção:** o baseline precisa ser o treinado no split v2 (demanda D-06); confira a data do anexo na Release.
 
 | Arquivo | Onde colocar |
 |---|---|
@@ -25,20 +25,19 @@ Com o GitHub CLI: `gh release download dados-baseline-s0 -R LeonLourenco/cnn-pru
 
 Nenhum dos dois vai para o Git (`.gitignore`). Não altere `data/splits/split.csv`.
 
-## 3. Conferir que o pipeline roda
+## 3. Conferir dados e pipeline (obrigatório)
 
 ```bash
-tar xf data/smoke/smoke.tar -C data/smoke
-python -m src.train --config configs/smoke.yaml --epochs 1 --no-pretrained --out-dir /tmp/res
-python scripts/run_structured.py --config configs/smoke.yaml --epochs 1 --results /tmp/res
+python scripts/audit_data.py --img-root data/processed/mio_subset   # 10 verificações, todas devem dar ok
+python -m pytest                                                     # 27 testes
 ```
 
-Os números do teste rápido não significam nada; ele só confirma que tudo executa.
+O split atual é o **v2** (45.788 imagens; ver `docs/AUDITORIA_DADOS.md`). O zip de imagens é o mesmo do v1 — as 218 imagens a mais no zip são ignoradas. Se a auditoria ou algum teste falhar, não treine: avise o Leon.
 
 ## 4. Implementar e rodar a poda L1 (D-01 e D-09)
 
 1. Decida e registre os critérios (global ou por camada; camadas excluídas) em `configs/default.yaml` (seção `unstructured`) e em `docs/SPEC.md` (seção 6).
-2. Implemente `src/pruning/unstructured.py` seguindo o contrato descrito no próprio arquivo, e um script `scripts/run_unstructured.py` no molde de `scripts/run_structured.py`: carregar o baseline da mesma semente → podar → avaliar antes do fine-tuning → fine-tuning com `src.train.fit(..., after_step=mask_hook(plan))` → avaliar com `src.evaluate.evaluate_model` → salvar.
+2. Implemente `src/pruning/unstructured.py` seguindo o contrato descrito no próprio arquivo, e um script `scripts/run_unstructured.py` no molde de `scripts/run_structured.py`: carregar o baseline da mesma semente → podar → avaliar antes do fine-tuning → fine-tuning com `src.train.fit(..., after_step=mask_hook(plan))` → avaliar com `src.evaluate.evaluate_model(..., pred_path=...)` gravando `<exp>_predictions_test.csv` (necessário para `scripts/analyze_results.py`) → salvar.
 3. Use **sempre** os hiperparâmetros de `configs/default.yaml` (fine-tuning de **10 épocas**, motivo em `docs/SPEC.md`, seção 4) e os nomes `exp2_l1_30_s0`, `exp3_l1_60_s0`, `exp4_l1_90_s0`.
 4. Teste primeiro com `configs/smoke.yaml`.
 

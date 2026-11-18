@@ -31,7 +31,9 @@ Resumo do processo de escolha da base (12/11/2026). O feedback do professor pedi
 
 Metade das imagens tem lado menor que 72 px → entrada de 112×112 (224 px ampliaria a maioria 3× ou mais).
 
-## Limpeza e split (`scripts/prepare_split.py`)
+## Split v1 (12/11) — substituído
+
+`scripts/prepare_split.py`:
 
 1. md5, pHash e dimensões de cada imagem (cache em `data/interim/features.tsv`).
 2. Agrupamento por union-find: imagens com md5 igual ou pHash igual ficam no mesmo grupo.
@@ -46,3 +48,31 @@ Metade das imagens tem lado menor que 72 px → entrada de 112×112 (224 px ampl
 | motorcycle | 1.383 | 296 | 296 |
 | non-motorized_vehicle | 1.224 | 262 | 262 |
 | **Total** | | | **46.006** |
+
+## Split v2 (18/11) — oficial
+
+**Problema encontrado no v1.** A revisão dos primeiros resultados mediu que 9,3% das imagens de teste tinham uma quase-cópia no treino (pHash a ≤ 4 bits), e 95–97% desses pares eram da mesma classe: quadros quase iguais da mesma câmera. O v1 só agrupava pHash *idêntico*. Isso infla as métricas e pode exagerar a queda da poda (um modelo menor "lembra" menos quadros vistos no treino).
+
+**Escolha do limiar (todas as 46.006 imagens da amostra, todos os pares):**
+
+| Distância pHash (bits) | Pares | Mesma classe | Cruzavam o split v1 |
+|---:|---:|---:|---:|
+| 0 | 2.776 | 100,0% | 0 |
+| 2 | 2.464 | 98,3% | 1.141 |
+| 4 | 10.475 | 99,1% | 6.934 |
+| 6 | 17.999 | 98,3% | 9.751 |
+| 8 | 27.148 | 96,5% | 14.593 |
+| 10 | 38.964 | 87,5% | 18.512 |
+
+Até 8 bits, os pares são quase sempre do mesmo objeto. Com 10 bits, o agrupamento transitivo forma um componente único de 9.609 imagens, inviável para o split. **Limiar: 8 bits** (maior grupo resultante: 921 imagens).
+
+**`scripts/regroup_split.py`:**
+1. Mesmas 46.006 imagens do v1 (o `mio_subset.zip` não muda).
+2. Remove as 218 imagens que têm quase-cópia (≤ 4 bits) com rótulo diferente — 135 pares, provável erro de rótulo.
+3. Agrupa quase-duplicatas (≤ 8 bits) por union-find: 3.035 grupos com mais de uma imagem.
+4. Distribui grupos inteiros em 70/15/15, de forma estratificada por classe (gulosa, semente 42).
+5. Grava `split.csv` com md5 e pHash, para a auditoria rodar só com o Git. Relatório: `data/splits/split_report.json`.
+
+**Resultado:** 45.788 imagens (treino 32.049 · val 6.870 · teste 6.869); maior desvio da proporção 70/15/15 por classe: 0,05 p.p.; menor distância entre imagens de splits diferentes: 10 bits.
+
+**Auditoria independente** (`scripts/audit_data.py`, relatório em `data/splits/audit_report.json`): 10 verificações — esquema, proporções, suporte mínimo no teste, grupos, md5 entre splits, quase-duplicatas entre splits, rótulos conflitantes, existência/integridade/md5 de cada imagem e consistência do mini-subconjunto. Todas passam no v2. **Controle negativo:** o split v1 reprovado na mesma auditoria falha exatamente em S6 (distância mínima entre splits de 2 bits) e S7 (135 conflitos de rótulo).

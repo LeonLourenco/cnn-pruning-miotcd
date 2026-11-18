@@ -24,9 +24,10 @@ Trabalho da disciplina de Redes Neurais (UFRPE). Avalia como técnicas e intensi
 
 ```
 configs/      default.yaml (protocolo) e smoke.yaml (teste rápido)
-data/splits/  split.csv: partição oficial do trabalho
+data/splits/  split.csv (v2): partição oficial + relatórios de split e auditoria
 data/smoke/   mini-subconjunto (396 imagens) para teste rápido
-scripts/      preparar dados, rodar poda estruturada, latência, consolidar resultados
+scripts/      dados (split, auditoria), poda estruturada, latência, consolidação e análise estatística
+tests/        integridade dos dados e execução do pipeline (pytest)
 src/          dados, modelo, treino, avaliação, poda
 results/      saídas por experimento (JSON no Git; .pt fora)
 ```
@@ -35,6 +36,10 @@ results/      saídas por experimento (JSON no Git; .pt fora)
 
 ```bash
 pip install -r requirements.txt
+
+# auditoria dos dados e testes (obrigatorios antes de treinar)
+python scripts/audit_data.py --img-root data/processed/mio_subset
+python -m pytest
 
 # teste de ponta a ponta (CPU, ~1 min)
 tar xf data/smoke/smoke.tar -C data/smoke
@@ -48,6 +53,7 @@ python scripts/run_structured.py --seed 0
 # latência (só no notebook do Leon, Windows nativo) e consolidação
 python scripts/benchmark_latency.py
 python scripts/aggregate_results.py
+python scripts/analyze_results.py --seed 0
 ```
 
 ## Dados

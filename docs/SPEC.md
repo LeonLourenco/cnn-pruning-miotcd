@@ -28,8 +28,11 @@ Todos os experimentos de poda partem do checkpoint do Exp 1 **da mesma semente**
 ## 3. Dados
 
 - **Base:** MIO-TCD Classification (Luo et al., IEEE TIP 2018), licença CC BY-NC-SA 4.0.
-- **Partição:** `data/splits/split.csv`, gerado por `scripts/prepare_split.py` (semente 42). O teste oficial do MIO-TCD não tem rótulos, então treino/val/teste saem das 519.164 imagens de treino rotuladas. Detalhes da auditoria e da limpeza em `docs/AUDITORIA_DADOS.md`.
-- **Amostra:** teto de 5.000 imagens por classe, split 70/15/15 por grupo de quase-duplicatas (pHash/md5), sem vazamento entre splits. Total: 46.006 imagens.
+- **Partição (split v2, desde 18/11):** `data/splits/split.csv`. O teste oficial do MIO-TCD não tem rótulos, então treino/val/teste saem das 519.164 imagens de treino rotuladas. Detalhes em `docs/AUDITORIA_DADOS.md`.
+  1. `scripts/prepare_split.py` (semente 42): amostra com teto de 5.000 imagens por classe (46.006 imagens).
+  2. `scripts/regroup_split.py` (semente 42): agrupa quase-duplicatas (pHash ≤ 8 bits), remove 218 imagens com quase-cópia de rótulo diferente e refaz o split 70/15/15 por grupo. Total: **45.788 imagens** (treino 32.049 · val 6.870 · teste 6.869).
+  - O split v1 só agrupava pHash idêntico e deixava 14.593 pares de quase-cópias entre splits (vazamento). Todos os resultados obtidos com ele foram descartados.
+- **Auditoria obrigatória:** `scripts/audit_data.py` (10 verificações) e `python -m pytest` precisam passar antes de qualquer treino. O notebook do Kaggle aborta se a auditoria falhar.
 - **Entrada:** 112×112, RGB, normalização do ImageNet. Redimensionamento direto (sem corte central, para não cortar o veículo).
 - **Aumento de dados (só treino):** flip horizontal + RandomResizedCrop com escala 0,8–1,0.
 - **Desbalanceamento:** sem tratamento (cross-entropy pura). Assim o efeito da poda nas classes raras fica visível.
@@ -61,11 +64,14 @@ Critérios a definir pelo Gabriel (demanda D-01). Contrato do código em `src/pr
 
 | Dimensão | Métrica | Observação |
 |---|---|---|
-| Preditiva | **F1-macro** (principal), acurácia, precisão/recall/F1 por classe, matriz de confusão | recall das classes raras é a análise central |
-| Compressão | `params_total`, `params_nonzero`, `weight_sparsity` | modelos com máscara têm total igual ao baseline |
+| Preditiva | **F1-macro** (principal), acurácia, precisão/recall/**F1 por classe**, matriz de confusão | análise por classe usa F1, não só recall (o recall esconde quedas de precisão) |
+| Compressão | `params_total`, `params_nonzero`, **`params_effective`**, `weight_sparsity` | efetivo = o que de fato influencia a saída; na poda estruturada com máscara é o total do modelo físico equivalente |
 | Armazenamento | `size_mb` (state_dict puro), `size_zip_mb` (comprimido) | o zip mostra quanto a esparsidade *poderia* economizar |
-| Custo | `macs_measured`, `macs_theoretical` | medido = formato das camadas; teórico = só pesos não nulos |
+| Custo | `macs_measured`, `macs_theoretical`, **`macs_effective`** | medido = formato das camadas; teórico = só pesos não nulos; efetivo = como em `params_effective` |
+| Incerteza | IC 95% por bootstrap pareado e McNemar contra o baseline (`scripts/analyze_results.py`) | diferença só conta como real quando o IC não contém zero |
 | Eficiência | latência (mediana, média, desvio, p95) e throughput | só via `scripts/benchmark_latency.py` |
+
+Cada avaliação grava também `<exp>_predictions_test.csv` (uma linha por imagem), base da análise estatística.
 
 **Resultado esperado a não confundir:** esparsidade não é aceleração. O L1 zera pesos mas mantém tensores densos; sem formato esparso, a latência e os MACs medidos quase não mudam.
 
@@ -86,14 +92,16 @@ Critérios a definir pelo Gabriel (demanda D-01). Contrato do código em `src/pr
 ## 10. Organização e reprodutibilidade
 
 - Cada experimento gera em `results/<exp>/`: `<exp>.pt` (state_dict, só no baseline), `<exp>_model.pt` (modelo inteiro), `<exp>_metrics.json`, `<exp>_history.json` e, quando houver, `<exp>_prefinetune_metrics.json` e `<exp>_plan.json`.
-- `scripts/aggregate_results.py` junta tudo em `results/summary.csv` e `results/summary.md`. Ninguém copia números à mão.
+- `scripts/aggregate_results.py` junta tudo em `results/summary.csv` e `results/summary.md`; `scripts/analyze_results.py` gera `results/analysis_s<seed>.{json,md}`. Ninguém copia números à mão.
+- **Testes:** `python -m pytest` (27 testes: integridade do split com controles negativos, deduplicação, protocolo, loader, métricas, poda estruturada e execução ponta a ponta). Rodar antes de cada commit que mexe em `src/`, `scripts/`, `configs/` ou `data/splits/`.
 - Versões fixadas em `requirements.txt`. Sementes fixadas por `src/utils.set_seed`.
 
 ## 11. Limitações a declarar no relatório
 
 - Teste oficial sem rótulos → partição própria.
 - Amostra com teto por classe (5.000).
-- Quase-duplicatas agrupadas por pHash idêntico, sem ID de câmera.
+- Quase-duplicatas agrupadas por pHash ≤ 8 bits, sem ID de câmera: quadros parecidos que o pHash não captura podem restar.
+- Com o teto de 5.000 por classe, o desbalanceamento no treino cai de 149:1 para ~2,9:1; as classes "raras" são raras no MIO-TCD, mas não tanto na nossa amostra. A pergunta central deve ser lida assim.
 - Latência em CPU de notebook, não em dispositivo embarcado.
 - Poda one-shot com fine-tuning de 10 épocas; poda iterativa fica fora.
 - 1 semente no escopo atual (se D-04 não for feita).
