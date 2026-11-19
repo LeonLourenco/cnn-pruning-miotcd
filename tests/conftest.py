@@ -26,7 +26,10 @@ def smoke_dir():
     out = os.path.join(d, "smoke")
     if not os.path.exists(os.path.join(out, "split_smoke.csv")):
         with tarfile.open(os.path.join(d, "smoke.tar")) as t:
-            t.extractall(d)
+            try:
+                t.extractall(d, filter="data")  # Python >= 3.12: so arquivos comuns
+            except TypeError:
+                t.extractall(d)
     return out
 
 

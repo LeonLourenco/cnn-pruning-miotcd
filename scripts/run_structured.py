@@ -26,10 +26,11 @@ from src.models import build_resnet18  # noqa: E402
 from src.pruning.structured import (apply_mask, check_equivalence, mask_hook,  # noqa: E402
                                     physical_prune, select_channels)
 from src.train import fit  # noqa: E402
-from src.utils import exp_name, get_device, load_config, save_json, set_seed  # noqa: E402
+from src.utils import utf8_stdout, exp_name, get_device, load_config, save_json, set_seed  # noqa: E402
 
 
 def main():
+    utf8_stdout()
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default="configs/default.yaml")
     ap.add_argument("--seed", type=int, default=0)
@@ -84,7 +85,10 @@ def main():
     save_json(r6, os.path.join(out6, f"{e6}_metrics.json"))
 
     # o Exp 5 e equivalente ao Exp 6: seu custo efetivo e o do modelo fisico
+    # (vale tambem para a avaliacao antes do fine-tuning: mesmos canais zerados)
     eff = {"params_effective": r6["params_total"], "macs_effective": r6["macs_measured"]}
+    pre.update(eff)
+    save_json(pre, os.path.join(out5, f"{e5}_prefinetune_metrics.json"))
     r5 = {"exp": e5, "stage": "final",
           **evaluate_model(model, cfg, loaders, device, effective=eff,
                            pred_path=os.path.join(out5, f"{e5}_predictions_test.csv"))}

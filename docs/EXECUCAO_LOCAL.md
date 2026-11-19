@@ -29,7 +29,7 @@ Nenhum dos dois vai para o Git (`.gitignore`). Não altere `data/splits/split.cs
 
 ```bash
 python scripts/audit_data.py --img-root data/processed/mio_subset   # 10 verificações, todas devem dar ok
-python -m pytest                                                     # 27 testes
+python -m pytest                                                     # 28 testes
 ```
 
 O split atual é o **v2** (45.788 imagens; ver `docs/AUDITORIA_DADOS.md`). O zip de imagens é o mesmo do v1 — as 218 imagens a mais no zip são ignoradas. Se a auditoria ou algum teste falhar, não treine: avise o Leon.

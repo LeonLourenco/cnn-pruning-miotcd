@@ -27,7 +27,7 @@ import time
 import torch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from src.utils import load_config  # noqa: E402
+from src.utils import utf8_stdout, load_config  # noqa: E402
 
 
 def time_batches(model, x, n):
@@ -41,6 +41,7 @@ def time_batches(model, x, n):
 
 
 def main():
+    utf8_stdout()
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", default="configs/default.yaml")
     ap.add_argument("--results", default="results")

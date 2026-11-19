@@ -2,10 +2,19 @@
 import json
 import os
 import random
+import sys
 
 import numpy as np
 import torch
 import yaml
+
+
+def utf8_stdout():
+    """Forca UTF-8 na saida do terminal. No Windows o padrao (cp1252) nao tem
+    caracteres como '−' e 'Δ' e o print quebra com UnicodeEncodeError."""
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(encoding="utf-8", errors="replace")
 
 
 def load_config(path="configs/default.yaml"):

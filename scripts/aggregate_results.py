@@ -14,7 +14,11 @@ import glob
 import json
 import os
 import re
+import sys
 import statistics
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from src.utils import utf8_stdout  # noqa: E402
 
 COLS = ["f1_macro", "accuracy", "n_images", "params_total", "params_nonzero", "params_effective", "weight_sparsity",
         "size_mb", "size_zip_mb", "macs_measured", "macs_theoretical", "macs_effective"]
@@ -22,6 +26,7 @@ RARE = ["bicycle", "motorcycle", "non-motorized_vehicle"]
 
 
 def main():
+    utf8_stdout()
     ap = argparse.ArgumentParser()
     ap.add_argument("--results", default="results")
     a = ap.parse_args()

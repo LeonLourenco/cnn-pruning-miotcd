@@ -74,3 +74,25 @@ def test_smoke_consistente_com_split(split_rows, smoke_dir):
     from scripts.audit_data import check_smoke
     res = check_smoke(split_rows, smoke_dir)
     assert res["D3_smoke"]["ok"], res["D3_smoke"]["detalhe"]
+
+
+def test_detecta_imagem_faltando_ou_alterada(smoke_dir, tmp_path):
+    """Controle negativo da verificacao D1 sobre uma copia do mini-subconjunto."""
+    import csv
+    import hashlib
+    import os
+    import shutil
+    from scripts.audit_data import check_images
+    img = tmp_path / "img"
+    shutil.copytree(os.path.join(smoke_dir, "img"), img)
+    with open(os.path.join(smoke_dir, "split_smoke.csv"), newline="") as fh:
+        rows = list(csv.DictReader(fh))
+    assert check_images(rows, str(img))["D1_imagens"]["ok"]
+    a, b = rows[0], rows[1]
+    os.remove(img / a["classe"] / f"{a['id']}.jpg")
+    with open(img / b["classe"] / f"{b['id']}.jpg", "ab") as fh:
+        fh.write(b"x")
+    det = check_images(rows, str(img))["D1_imagens"]
+    assert not det["ok"]
+    assert det["detalhe"]["faltando"] == 1 and det["detalhe"]["md5_diferente"] == 1
+    assert hashlib.md5(b"").hexdigest()  # sanidade do import

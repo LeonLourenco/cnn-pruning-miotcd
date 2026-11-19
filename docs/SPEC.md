@@ -82,7 +82,8 @@ Cada avaliação grava também `<exp>_predictions_test.csv` (uma linha por image
 - `torch.set_num_threads(4)`, `eval()` + `inference_mode()`, entrada sintética 112×112.
 - Batch 1 (tempo de resposta) e batch 32 (vazão); 50 iterações de aquecimento, 300 medições, divididas em 3 rodadas com ordem alternada dos modelos.
 - Reportar a **mediana** como valor principal.
-- Pontos ainda em discussão: demanda D-03.
+- **Memória não é medida** (decisão de 18/11, D-03): no Windows, a memória de pico do processo é pouco confiável e não muda a conclusão; o custo de memória do modelo é representado pelo tamanho em MB e pelos parâmetros.
+- Protocolo fechado em 18/11 (D-03). Valores em `configs/default.yaml`, seção `latency`.
 
 ## 9. Hardware
 
@@ -93,7 +94,7 @@ Cada avaliação grava também `<exp>_predictions_test.csv` (uma linha por image
 
 - Cada experimento gera em `results/<exp>/`: `<exp>.pt` (state_dict, só no baseline), `<exp>_model.pt` (modelo inteiro), `<exp>_metrics.json`, `<exp>_history.json` e, quando houver, `<exp>_prefinetune_metrics.json` e `<exp>_plan.json`.
 - `scripts/aggregate_results.py` junta tudo em `results/summary.csv` e `results/summary.md`; `scripts/analyze_results.py` gera `results/analysis_s<seed>.{json,md}`. Ninguém copia números à mão.
-- **Testes:** `python -m pytest` (27 testes: integridade do split com controles negativos, deduplicação, protocolo, loader, métricas, poda estruturada e execução ponta a ponta). Rodar antes de cada commit que mexe em `src/`, `scripts/`, `configs/` ou `data/splits/`.
+- **Testes:** `python -m pytest` (28 testes: integridade do split com controles negativos, deduplicação, protocolo, loader, métricas, poda estruturada e execução ponta a ponta). Rodar antes de cada commit que mexe em `src/`, `scripts/`, `configs/` ou `data/splits/`.
 - Versões fixadas em `requirements.txt`. Sementes fixadas por `src/utils.set_seed`.
 
 ## 11. Limitações a declarar no relatório

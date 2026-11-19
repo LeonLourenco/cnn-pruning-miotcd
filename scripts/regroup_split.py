@@ -34,12 +34,14 @@ import sys
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from src.utils import utf8_stdout  # noqa: E402
 from src.dedup import components, hex_to_uint64, min_cross_distance, near_pairs  # noqa: E402
 
 SPLITS = ("train", "val", "test")
 
 
 def main():
+    utf8_stdout()
     ap = argparse.ArgumentParser()
     ap.add_argument("--split-in", required=True)
     ap.add_argument("--features", required=True)

@@ -32,6 +32,7 @@ import sys
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from src.utils import utf8_stdout  # noqa: E402
 from src.dedup import hex_to_uint64, min_cross_distance, near_pairs  # noqa: E402
 
 CLASSES = ["articulated_truck", "background", "bicycle", "bus", "car", "motorcycle",
@@ -94,23 +95,34 @@ def check_split(rows, dist=8, tol=0.01, min_test=200):
     return res
 
 
-def check_images(rows, img_root):
+def _check_one(args):
+    import io
     from PIL import Image
-    missing, unreadable, bad_md5 = [], [], []
-    for r in rows:
-        p = os.path.join(img_root, r["classe"], f"{r['id']}.jpg")
-        if not os.path.exists(p):
-            missing.append(r["id"])
-            continue
-        with open(p, "rb") as fh:
-            b = fh.read()
-        if hashlib.md5(b).hexdigest() != r["md5"]:
-            bad_md5.append(r["id"])
-        try:
-            with Image.open(p) as im:
-                im.verify()
-        except Exception:
-            unreadable.append(r["id"])
+    img_root, r = args
+    p = os.path.join(img_root, r["classe"], f"{r['id']}.jpg")
+    if not os.path.exists(p):
+        return "faltando", r["id"]
+    with open(p, "rb") as fh:
+        b = fh.read()
+    if hashlib.md5(b).hexdigest() != r["md5"]:
+        return "md5", r["id"]
+    try:
+        with Image.open(io.BytesIO(b)) as im:
+            im.verify()
+    except Exception:
+        return "ilegivel", r["id"]
+    return "ok", r["id"]
+
+
+def check_images(rows, img_root, workers=16):
+    """Le cada imagem uma vez (em paralelo: em discos de rede, como o /kaggle/input,
+    a leitura sequencial de 45 mil arquivos leva quase 1 hora)."""
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(workers) as ex:
+        out = list(ex.map(_check_one, [(img_root, r) for r in rows], chunksize=64))
+    missing = [i for s, i in out if s == "faltando"]
+    bad_md5 = [i for s, i in out if s == "md5"]
+    unreadable = [i for s, i in out if s == "ilegivel"]
     ids = {(r["classe"], r["id"]) for r in rows}
     extra = []
     for c in os.listdir(img_root):
@@ -139,6 +151,7 @@ def check_smoke(rows, smoke_dir):
 
 
 def main():
+    utf8_stdout()
     ap = argparse.ArgumentParser()
     ap.add_argument("--split", default="data/splits/split.csv")
     ap.add_argument("--img-root", default=None)

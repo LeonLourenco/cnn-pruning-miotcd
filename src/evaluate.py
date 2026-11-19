@@ -23,7 +23,7 @@ from sklearn.metrics import confusion_matrix, f1_score, precision_recall_fscore_
 
 from src.data import build_loaders
 from src.train import predict
-from src.utils import get_device, load_config, save_json
+from src.utils import utf8_stdout, get_device, load_config, save_json
 
 
 def _assert_no_prune_hooks(model):
@@ -133,6 +133,7 @@ def evaluate_model(model, cfg, loaders, device, split="test", pred_path=None, ef
 
 
 def main():
+    utf8_stdout()
     ap = argparse.ArgumentParser(description="Avalia um modelo salvo inteiro (torch.save(model))")
     ap.add_argument("--model", required=True, help="arquivo <exp>_model.pt")
     ap.add_argument("--exp", required=True, help="nome do experimento, ex.: exp5_struct_mask_50_s0")
