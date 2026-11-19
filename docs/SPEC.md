@@ -58,7 +58,15 @@ Todos os experimentos de poda partem do checkpoint do Exp 1 **da mesma semente**
 
 ## 6. Poda não estruturada L1 (Exp 2–4)
 
-Critérios a definir pelo Gabriel (demanda D-01). Contrato do código em `src/pruning/unstructured.py`.
+Decidido em D-01 (Leon e Gabriel). Implementação em `src/pruning/unstructured.py`; execução em `scripts/run_unstructured.py`.
+
+- Critério: magnitude dos pesos (norma L1 de cada peso individual); zera os menores.
+- Escopo: **global** — um único ranking com os pesos de todas as camadas podadas, então cada camada perde uma fração diferente.
+- Camadas podadas: todas as `Conv2d` e `Linear`, exceto `conv1` e `fc` (mesmo critério da poda estruturada); na ResNet-18 isso deixa só as convoluções internas e de downsample. BatchNorm não é podada.
+- Intensidades: 30, 60 e 90% dos pesos das camadas podadas (Exp 2, 3 e 4).
+- One-shot a partir do baseline da mesma semente; avaliação antes do fine-tuning.
+- Fine-tuning: o mesmo da seção 4 (10 épocas), com a máscara reaplicada depois de cada passo do otimizador para os pesos podados continuarem em zero.
+- Sem remoção física: o modelo continua denso em memória, então os MACs medidos e a latência não caem; o ganho aparece em `params_nonzero` e no tamanho comprimido.
 
 ## 7. Métricas (todas calculadas por `src/evaluate.py`)
 

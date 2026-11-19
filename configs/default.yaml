@@ -40,10 +40,10 @@ structured:                   # Exp 5 e 6 (Leon)
   importance: l1              # norma L1 dos filtros
   ignore: [conv1, fc]         # camadas que nao sao podadas
 
-unstructured:                 # Exp 2-4 (Gabriel) - criterios a definir, ver docs/DEMANDAS.md
+unstructured:                 # Exp 2-4 (Gabriel)
   amounts: [0.3, 0.6, 0.9]
-  scope: null                 # global | layer  (A DEFINIR)
-  ignore: null                # ex.: [conv1, fc] (A DEFINIR)
+  scope: global               # decidido em D-01
+  ignore: [conv1, fc]         # mesmas camadas da estruturada
 
 latency:                      # medido SOMENTE no notebook do Leon, Python nativo do Windows
   threads: 4
