@@ -17,7 +17,7 @@ Trabalho da disciplina de Redes Neurais (UFRPE). Avalia como técnicas e intensi
 - [`docs/SPEC.md`](docs/SPEC.md) — protocolo experimental (fonte única de verdade)
 - [`docs/DEMANDAS.md`](docs/DEMANDAS.md) — pendências, responsáveis e cronograma
 - [`docs/AUDITORIA_DADOS.md`](docs/AUDITORIA_DADOS.md) — escolha da base, limpeza e split
-- [`docs/RESULTADOS.md`](docs/RESULTADOS.md) — resultados e análise (parciais)
+- [`docs/RESULTADOS.md`](docs/RESULTADOS.md) — primeira análise (semente 0, Exp 1, 5 e 6); resultados finais no relatório
 - [`docs/EXECUCAO_LOCAL.md`](docs/EXECUCAO_LOCAL.md) — como rodar os Exp 2–4 no próprio computador
 - [`docs/KAGGLE.md`](docs/KAGGLE.md) — como treinar no Kaggle (opcional)
 
@@ -48,14 +48,15 @@ tar xf data/smoke/smoke.tar -C data/smoke
 python -m src.train --config configs/smoke.yaml --epochs 1 --no-pretrained --out-dir /tmp/res
 python scripts/run_structured.py --config configs/smoke.yaml --epochs 1 --results /tmp/res
 
-# experimentos reais (GPU, ver docs/KAGGLE.md)
+# experimentos reais (GPU, ver docs/KAGGLE.md e docs/EXECUCAO_LOCAL.md), sementes 0, 1 e 2
 python -m src.train --seed 0
 python scripts/run_structured.py --seed 0
+python scripts/run_unstructured.py --seed 0
 
 # latência (só no notebook do Leon, Windows nativo) e consolidação
 python scripts/benchmark_latency.py
 python scripts/aggregate_results.py
-python scripts/analyze_results.py --seed 0
+python scripts/analyze_results.py --seed 0   # repetir para 1 e 2
 ```
 
 ## Dados

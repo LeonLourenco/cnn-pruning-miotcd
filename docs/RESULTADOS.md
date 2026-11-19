@@ -1,6 +1,8 @@
 # Resultados
 
-**Estado (18/11):** Exp 1, 5 e 6 com a semente 0 no **split v2** (Kaggle, T4, notebook versão #3). Exp 2–4 (L1) e latência pendentes. Os números vêm de `results/summary.md` e `results/analysis_s0.md`, gerados pelos scripts e conferidos contra as predições por imagem (F1 recalculado = JSON; análise refeita localmente = análise do Kaggle).
+> **Resultados finais (19/11):** os 6 experimentos nas 3 sementes, com a latência, estão no relatório ([`relatorio/relatorio.pdf`](../relatorio/relatorio.pdf)), em `results/summary.md` e em `results/analysis_s{0,1,2}.md`. Este documento é o registro da **primeira análise**, feita só com os Exp 1, 5 e 6 na semente 0, e foi mantido como histórico.
+
+**Estado (18/11):** Exp 1, 5 e 6 com a semente 0 no **split v2** (Kaggle, T4, notebook versão #3). Os números vêm de `results/summary.md` e `results/analysis_s0.md`, gerados pelos scripts e conferidos contra as predições por imagem (F1 recalculado = JSON; análise refeita localmente = análise do Kaggle).
 
 Teste: 6.869 imagens. IC 95% por bootstrap pareado (2.000 reamostragens). `*` = intervalo não contém zero.
 
@@ -53,9 +55,9 @@ Isso sugere que a poda tira primeiro a capacidade de **distinções finas** (tip
 
 ## Limitações destes resultados
 
-- 1 semente (D-04): os IC refletem a variação do conjunto de teste, não a do treino.
+- 1 semente (D-04): os IC refletem a variação do conjunto de teste, não a do treino. *Resolvido depois: 3 sementes; com elas a queda média do Exp 6 é de 5,3 p.p. e o contraste raras × demais muda de sinal entre sementes.*
 - No treino da amostra, o desbalanceamento é ~2,9:1 (não 149:1): o teste da pergunta central tem pouco contraste entre "raras" e "frequentes" por construção.
-- Só a poda estruturada; a comparação com o L1 (Exp 2–4) vai mostrar se o padrão depende da técnica.
+- Só a poda estruturada. *Resolvido depois: com a L1 (Exp 2–4) a conclusão é a mesma — sem evidência consistente de que as raras percam mais.*
 - O `exp5_struct_mask_50_s0_prefinetune_metrics.json` desta execução registra `params_effective`/`macs_effective` iguais aos não nulos (5,64 M / 286 M); o código foi corrigido depois para usar o custo do modelo físico (2,86 M / 176 M). Os demais arquivos já usam o valor certo.
 
 ## Histórico: split v1 (descartado)

@@ -44,7 +44,7 @@ Todos os experimentos de poda partem do checkpoint do Exp 1 **da mesma semente**
 - **Fine-tuning após a poda (Exp 2–6):** poda única (one-shot) e depois **10 épocas**, LR 0,001 com cosine, mesmo otimizador. A máscara fica fixa durante o fine-tuning.
   - **Mudança em 18/11 (de 5 para 10 épocas).** Na primeira execução do Exp 5 (semente 0), o F1-macro de validação ainda subia em todas as 5 épocas (0,771 → 0,796 → 0,810 → 0,814 → 0,818), ou seja, o fine-tuning não tinha convergido. Com 5 épocas, parte da queda em relação ao baseline seria falta de treino, não efeito da poda, o que distorce a comparação central do trabalho. A mudança foi feita antes de qualquer execução dos Exp 2–4, então todos os experimentos de poda seguem o mesmo protocolo; o Exp 5 e o Exp 6 foram rodados de novo. Custo: ~3,5 min a mais por experimento na T4.
 - **Seleção do checkpoint:** melhor F1-macro na **validação**. O teste é usado uma única vez, na avaliação final.
-- **Sementes:** escopo atual = 1 semente (0). Sementes 1 e 2 são a demanda D-04.
+- **Sementes:** 0, 1 e 2 em todos os experimentos (D-04, feita em 19/11). Resultados reportados como média ± desvio.
 - Também se registram as métricas logo após a poda, **antes** do fine-tuning, para mostrar quanto o fine-tuning recupera.
 
 ## 5. Poda estruturada (Exp 5 e 6)
@@ -95,7 +95,7 @@ Cada avaliação grava também `<exp>_predictions_test.csv` (uma linha por image
 
 ## 9. Hardware
 
-- **Treino:** Kaggle (GPU P100/T4) ou Colab. Gabriel: GPU de entrada do desktop dele (modelo a confirmar, D-02).
+- **Treino:** Kaggle (GPU P100/T4) ou Colab. Gabriel: desktop com NVIDIA GeForce RTX 3050 6 GB, PyTorch 2.11.0, CUDA 12.8 (D-02).
 - Como o treino roda em máquinas diferentes, tempo de treino **não** é métrica. As comparações de custo usam MACs e parâmetros, que não dependem do hardware.
 
 ## 10. Organização e reprodutibilidade
@@ -113,4 +113,4 @@ Cada avaliação grava também `<exp>_predictions_test.csv` (uma linha por image
 - Com o teto de 5.000 por classe, o desbalanceamento no treino cai de 149:1 para ~2,9:1; as classes "raras" são raras no MIO-TCD, mas não tanto na nossa amostra. A pergunta central deve ser lida assim.
 - Latência em CPU de notebook, não em dispositivo embarcado.
 - Poda one-shot com fine-tuning de 10 épocas; poda iterativa fica fora.
-- 1 semente no escopo atual (se D-04 não for feita).
+- 3 sementes: pouco para estimar a variação entre treinos com precisão.

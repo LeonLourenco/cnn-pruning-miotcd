@@ -23,12 +23,12 @@ Se o tempo apertar, a ordem de corte é: sementes extras (D-04) → gráficos al
 | D-01 | **Definir e implementar a poda L1 não estruturada**: escopo global ou por camada; camadas excluídas; registrar em `configs/default.yaml` e `docs/SPEC.md` (seção 6); implementar `src/pruning/unstructured.py` seguindo o contrato do arquivo. **Decisão:** L1 global, ignora conv1 e fc (mesmo critério da estruturada), decidido por Leon e Gabriel; registrado em `configs/default.yaml` e `docs/SPEC.md` (seção 6) | Gabriel | fechada | — |
 | D-02 | Informar o modelo da GPU do desktop do Gabriel e a versão do PyTorch usada. **Resposta:** NVIDIA GeForce RTX 3050 6 GB, PyTorch 2.11.0, CUDA 12.8 | Gabriel | fechada | — |
 | D-04 | Rodar sementes 1 e 2 em todos os experimentos (média ± desvio) | Ambos | fechada: os 6 experimentos nas 3 sementes (19/11) | D-09 |
-| D-13 | **Gabriel:** dar `git pull` (split v2, auditoria, testes, métricas efetivas e predições por imagem) e rodar `python -m pytest` antes de continuar; usar o baseline novo quando D-06 for feita. O código da poda L1 não é afetado | Gabriel | aberta | — |
-| D-08 | Benchmark de latência dos 6 modelos no notebook do Leon (Windows nativo) | Leon | aberta | D-09 |
+| D-13 | **Gabriel:** dar `git pull` (split v2, auditoria, testes, métricas efetivas e predições por imagem) e rodar `python -m pytest` antes de continuar; usar o baseline novo quando D-06 for feita. O código da poda L1 não é afetado | Gabriel | fechada | — |
+| D-08 | Benchmark de latência dos 6 modelos no notebook do Leon (Windows nativo) | Leon | fechada: modelos da semente 0, `results/latency/` (19/11) | D-09 |
 | D-09 | Rodar Exp 2, 3 e 4 no próprio computador (o notebook do Kaggle é opcional) | Gabriel | fechada: sementes 0, 1 e 2 (19/11) | D-01, D-06 |
-| D-10 | `scripts/aggregate_results.py` com todos os resultados | Leon | aberta | D-08 |
-| D-11 | Gráficos: compressão × F1-macro; recall das classes raras × intensidade de poda; latência × tamanho | Ambos | aberta | D-10 |
-| D-12 | Slides: problema e base, auditoria dos dados, metodologia, resultados, limitações, conclusão | Ambos | aberta | D-10 |
+| D-10 | `scripts/aggregate_results.py` com todos os resultados | Leon | fechada: `results/summary.md` e `results/analysis_s{0,1,2}.md` (19/11) | D-08 |
+| D-11 | Gráficos: compressão × F1-macro; recall das classes raras × intensidade de poda; latência × tamanho | Ambos | fechada: `relatorio/figuras/` (19/11) | D-10 |
+| D-12 | Slides: problema e base, auditoria dos dados, metodologia, resultados, limitações, conclusão | Ambos | em andamento | D-10 |
 
 ## Feitas
 
@@ -36,7 +36,7 @@ Se o tempo apertar, a ordem de corte é: sementes extras (D-04) → gráficos al
 |---|---|---|
 | F-01 | Escolha e auditoria das bases (MIO-TCD escolhida) | 12/11 |
 | F-02 | Limpeza, amostra e split sem vazamento (`split.csv`) | 12/11 |
-| F-03 | Repositório privado no GitHub + convite ao Gabriel | 17/11 |
+| F-03 | Repositório privado no GitHub + convite ao Gabriel (público desde 19/11) | 17/11 |
 | F-04 | Base de código: dados, treino, avaliação, poda estruturada, latência, agregação | 17/11 |
 | F-05 | Teste de ponta a ponta no mini-subconjunto (`configs/smoke.yaml`): máscara e físico com saídas idênticas | 17/11 |
 | F-06 | Dataset privado `leonloureno/mio-tcd-subset-46k` no Kaggle + notebook `notebooks/kaggle_pipeline.ipynb` (antiga D-05) | 18/11 |

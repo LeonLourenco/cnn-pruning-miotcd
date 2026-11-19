@@ -12,9 +12,9 @@ O código vem do GitHub; os dados vêm do dataset **privado** `leonloureno/mio-t
 2. Compartilhe o dataset com a conta do Gabriel (*Settings → Sharing*).
 3. O Kaggle extrai o zip: as imagens ficam em `/kaggle/input/mio-tcd-subset-46k/<classe>/<id>.jpg`.
 
-## 2. Acesso ao repositório privado
+## 2. Acesso ao repositório
 
-Crie um token do GitHub com leitura de conteúdo do repositório (*Settings → Developer settings → Fine-grained tokens*, só este repositório, permissão *Contents: Read*). No notebook do Kaggle: *Add-ons → Secrets*, nome `GH_TOKEN`.
+Desde 19/11 o repositório é público e o token não é mais necessário (basta `git clone` sem `{tok}@`). Enquanto era privado: crie um token do GitHub com leitura de conteúdo do repositório (*Settings → Developer settings → Fine-grained tokens*, só este repositório, permissão *Contents: Read*). No notebook do Kaggle: *Add-ons → Secrets*, nome `GH_TOKEN`.
 
 ## 3. Notebook (Accelerator: GPU; Internet: On)
 
