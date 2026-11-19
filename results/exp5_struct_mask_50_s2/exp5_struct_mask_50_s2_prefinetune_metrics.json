@@ -1,0 +1,230 @@
+{
+  "exp": "exp5_struct_mask_50_s2",
+  "stage": "pre_finetune",
+  "split": "test",
+  "n_images": 6869,
+  "f1_macro": 0.02495335527658459,
+  "accuracy": 0.05604891541709128,
+  "per_class": {
+    "articulated_truck": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 743
+    },
+    "background": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 750
+    },
+    "bicycle": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 341
+    },
+    "bus": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 749
+    },
+    "car": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 747
+    },
+    "motorcycle": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 296
+    },
+    "non-motorized_vehicle": {
+      "precision": 0.039697846351655415,
+      "recall": 0.95,
+      "f1": 0.07621104597346498,
+      "support": 260
+    },
+    "pedestrian": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 749
+    },
+    "pickup_truck": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 746
+    },
+    "single_unit_truck": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 743
+    },
+    "work_van": {
+      "precision": 0.2132921174652241,
+      "recall": 0.18523489932885906,
+      "f1": 0.19827586206896552,
+      "support": 745
+    }
+  },
+  "confusion_matrix": [
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      671,
+      0,
+      0,
+      0,
+      72
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      748,
+      0,
+      0,
+      0,
+      2
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      328,
+      0,
+      0,
+      0,
+      13
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      566,
+      0,
+      0,
+      0,
+      183
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      636,
+      0,
+      0,
+      0,
+      111
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      292,
+      0,
+      0,
+      0,
+      4
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      247,
+      0,
+      0,
+      0,
+      13
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      744,
+      0,
+      0,
+      0,
+      5
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      708,
+      0,
+      0,
+      0,
+      38
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      675,
+      0,
+      0,
+      0,
+      68
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      607,
+      0,
+      0,
+      0,
+      138
+    ]
+  ],
+  "params_total": 11182155,
+  "params_nonzero": 5635659,
+  "weight_sparsity": 0.4960274043225965,
+  "size_mb": 42.73157787322998,
+  "size_zip_mb": 20.1133975982666,
+  "macs_measured": 484853248,
+  "macs_theoretical": 286082560,
+  "params_effective": 2863947,
+  "macs_effective": 176257792
+}
