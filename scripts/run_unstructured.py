@@ -79,3 +79,13 @@ def main():
                     help="intensidades a rodar (padrao: unstructured.amounts do YAML)")
     ap.add_argument("--max-batches", type=int, default=None, help="so para smoke test")
     ap.add_argument("--epochs", type=int, default=None, help="sobrescreve (so para smoke test)")
+    a = ap.parse_args()
+
+    cfg = load_config(a.config)
+    device = get_device()
+    for amount in a.amounts or cfg["unstructured"]["amounts"]:
+        run_one(cfg, a, amount, device)
+
+
+if __name__ == "__main__":
+    main()

@@ -29,3 +29,8 @@ def test_smoke_espelha_o_protocolo(root):
     for k in ("epochs", "lr", "optimizer", "momentum", "weight_decay", "scheduler"):
         assert d["baseline"][k] == s["baseline"][k] and d["finetune"][k] == s["finetune"][k], k
     assert d["data"]["classes"] == s["data"]["classes"] and d["data"]["img_size"] == s["data"]["img_size"]
+
+def test_unstructured_decidido():
+    cfg = load_config("configs/default.yaml")
+    assert cfg["unstructured"]["scope"] == "global"
+    assert cfg["unstructured"]["ignore"] == ["conv1", "fc"]
