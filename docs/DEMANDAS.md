@@ -22,7 +22,7 @@ Se o tempo apertar, a ordem de corte é: sementes extras (D-04) → gráficos al
 |---|---|---|---|---|
 | D-01 | **Definir e implementar a poda L1 não estruturada**: escopo global ou por camada; camadas excluídas; registrar em `configs/default.yaml` e `docs/SPEC.md` (seção 6); implementar `src/pruning/unstructured.py` seguindo o contrato do arquivo. **Decisão:** L1 global, ignora conv1 e fc (mesmo critério da estruturada), decidido por Leon e Gabriel; registrado em `configs/default.yaml` e `docs/SPEC.md` (seção 6) | Gabriel | fechada | — |
 | D-02 | Informar o modelo da GPU do desktop do Gabriel e a versão do PyTorch usada | Gabriel | aberta | — |
-| D-04 | Rodar sementes 1 e 2 em todos os experimentos (média ± desvio) | Ambos | aberta (opcional, se houver tempo) | D-09 |
+| D-04 | Rodar sementes 1 e 2 em todos os experimentos (média ± desvio) | Ambos | parcial: Exp 1, 5 e 6 prontos nas 3 sementes (18/11); baselines s1 e s2 na Release; faltam os Exp 2-4 | D-09 |
 | D-13 | **Gabriel:** dar `git pull` (split v2, auditoria, testes, métricas efetivas e predições por imagem) e rodar `python -m pytest` antes de continuar; usar o baseline novo quando D-06 for feita. O código da poda L1 não é afetado | Gabriel | aberta | — |
 | D-08 | Benchmark de latência dos 6 modelos no notebook do Leon (Windows nativo) | Leon | aberta | D-09 |
 | D-09 | Rodar Exp 2, 3 e 4 no próprio computador (o notebook do Kaggle é opcional) | Gabriel | aberta | D-01, D-06 |
