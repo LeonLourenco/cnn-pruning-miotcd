@@ -13,6 +13,7 @@ Trabalho da disciplina de Redes Neurais (UFRPE). Avalia como técnicas e intensi
 
 ## Documentação
 
+- [`relatorio/relatorio.pdf`](relatorio/relatorio.pdf) — relatório final (formato SBC)
 - [`docs/SPEC.md`](docs/SPEC.md) — protocolo experimental (fonte única de verdade)
 - [`docs/DEMANDAS.md`](docs/DEMANDAS.md) — pendências, responsáveis e cronograma
 - [`docs/AUDITORIA_DADOS.md`](docs/AUDITORIA_DADOS.md) — escolha da base, limpeza e split
@@ -30,6 +31,7 @@ scripts/      dados (split, auditoria), poda estruturada, latência, consolidaç
 tests/        integridade dos dados e execução do pipeline (pytest)
 src/          dados, modelo, treino, avaliação, poda
 results/      saídas por experimento (JSON no Git; .pt fora)
+relatorio/    relatório final em PDF e figuras (gerar_figuras.py)
 ```
 
 ## Uso rápido

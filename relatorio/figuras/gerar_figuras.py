@@ -61,7 +61,6 @@ def fig_delta_por_classe():
                        Patch(color=COR["rara"], label="rara (*)")],
               fontsize=8, frameon=False, loc="lower left")
     fig.tight_layout()
-    fig.savefig(os.path.join(OUT, "delta_f1_classes.pdf"))
     fig.savefig(os.path.join(OUT, "delta_f1_classes.png"), dpi=200)
     plt.close(fig)
 
