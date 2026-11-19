@@ -4,6 +4,909 @@
  "boot": 2000,
  "baseline": "exp1_baseline_s1",
  "experiments": {
+  "exp2_l1_30_s1": {
+   "f1_macro": {
+    "delta": 0.0033014442589005544,
+    "ci95": [
+     -0.00017953364105935114,
+     0.006627795877613995
+    ],
+    "significativo": false
+   },
+   "accuracy": {
+    "delta": 0.004513029553064429,
+    "ci95": [
+     0.0011646527878876878,
+     0.007428301062745665
+    ],
+    "significativo": true
+   },
+   "recall_articulated_truck": {
+    "delta": 0.004037685060565233,
+    "ci95": [
+     -0.00548734582052626,
+     0.013586956521739135
+    ],
+    "significativo": false
+   },
+   "recall_background": {
+    "delta": -0.0013333333333332975,
+    "ci95": [
+     -0.005682629870129813,
+     0.0028012186641838627
+    ],
+    "significativo": false
+   },
+   "recall_bicycle": {
+    "delta": -0.017595307917888547,
+    "ci95": [
+     -0.03296703296703296,
+     -0.005681818181818232
+    ],
+    "significativo": true
+   },
+   "recall_bus": {
+    "delta": 0.001335113484646211,
+    "ci95": [
+     -0.005128205128205113,
+     0.007916090798676547
+    ],
+    "significativo": false
+   },
+   "recall_car": {
+    "delta": 0.004016064257028162,
+    "ci95": [
+     -0.0039789119384531,
+     0.01236306248771867
+    ],
+    "significativo": false
+   },
+   "recall_motorcycle": {
+    "delta": 0.006756756756756688,
+    "ci95": [
+     -0.006515190223755085,
+     0.021130506442912856
+    ],
+    "significativo": false
+   },
+   "recall_non-motorized_vehicle": {
+    "delta": -0.0038461538461539435,
+    "ci95": [
+     -0.02381189527603862,
+     0.016197636949516564
+    ],
+    "significativo": false
+   },
+   "recall_pedestrian": {
+    "delta": -0.002670226969292422,
+    "ci95": [
+     -0.008241758241758216,
+     0.0025977416839035633
+    ],
+    "significativo": false
+   },
+   "recall_pickup_truck": {
+    "delta": 0.04825737265415553,
+    "ci95": [
+     0.031493108893448404,
+     0.0651354281250498
+    ],
+    "significativo": true
+   },
+   "recall_single_unit_truck": {
+    "delta": 0.0026917900403768957,
+    "ci95": [
+     -0.0063888140565134255,
+     0.012032085561497374
+    ],
+    "significativo": false
+   },
+   "recall_work_van": {
+    "delta": -0.008053691275167751,
+    "ci95": [
+     -0.01728780951638958,
+     0.0
+    ],
+    "significativo": false
+   },
+   "precision_articulated_truck": {
+    "delta": 0.006628220273392271,
+    "ci95": [
+     -0.0017929359823399464,
+     0.015696216041038373
+    ],
+    "significativo": false
+   },
+   "precision_background": {
+    "delta": 0.002551393855741657,
+    "ci95": [
+     -0.002523346360535475,
+     0.008150019185679626
+    ],
+    "significativo": false
+   },
+   "precision_bicycle": {
+    "delta": 0.0005247813411077829,
+    "ci95": [
+     -0.014515360403569693,
+     0.015839646653250126
+    ],
+    "significativo": false
+   },
+   "precision_bus": {
+    "delta": 6.331495390676789e-05,
+    "ci95": [
+     -0.0050927597537176236,
+     0.005283605678061955
+    ],
+    "significativo": false
+   },
+   "precision_car": {
+    "delta": -0.0005745866629468521,
+    "ci95": [
+     -0.010577026896673242,
+     0.009510118832964161
+    ],
+    "significativo": false
+   },
+   "precision_motorcycle": {
+    "delta": -0.005111976630963966,
+    "ci95": [
+     -0.016942290133282762,
+     0.005424517331414827
+    ],
+    "significativo": false
+   },
+   "precision_non-motorized_vehicle": {
+    "delta": -0.0007398638650487621,
+    "ci95": [
+     -0.019858476414486077,
+     0.018583758717707632
+    ],
+    "significativo": false
+   },
+   "precision_pedestrian": {
+    "delta": -0.00012020106359722504,
+    "ci95": [
+     -0.007732454980072056,
+     0.006921538869613311
+    ],
+    "significativo": false
+   },
+   "precision_pickup_truck": {
+    "delta": 0.0003269042170643832,
+    "ci95": [
+     -0.009354059994636987,
+     0.00947949067229605
+    ],
+    "significativo": false
+   },
+   "precision_single_unit_truck": {
+    "delta": 0.021786261028077902,
+    "ci95": [
+     0.009371857371227265,
+     0.03418047753427426
+    ],
+    "significativo": true
+   },
+   "precision_work_van": {
+    "delta": 0.006726495465303017,
+    "ci95": [
+     -0.0019876869239423196,
+     0.01570055711956708
+    ],
+    "significativo": false
+   },
+   "f1_articulated_truck": {
+    "delta": 0.005290182336075477,
+    "ci95": [
+     -0.0017731671684214773,
+     0.012231402139635994
+    ],
+    "significativo": false
+   },
+   "f1_background": {
+    "delta": 0.0006283679067693448,
+    "ci95": [
+     -0.002735997513374519,
+     0.0044749139053896795
+    ],
+    "significativo": false
+   },
+   "f1_bicycle": {
+    "delta": -0.008391093508010483,
+    "ci95": [
+     -0.019580867750720078,
+     0.0018006519856284722
+    ],
+    "significativo": false
+   },
+   "f1_bus": {
+    "delta": 0.0007039104740801383,
+    "ci95": [
+     -0.003260770469227206,
+     0.004937255753508921
+    ],
+    "significativo": false
+   },
+   "f1_car": {
+    "delta": 0.0016339552279022174,
+    "ci95": [
+     -0.005215911012705488,
+     0.008529471475512421
+    ],
+    "significativo": false
+   },
+   "f1_motorcycle": {
+    "delta": 0.0004729962160301415,
+    "ci95": [
+     -0.008873804174958292,
+     0.009621080457730797
+    ],
+    "significativo": false
+   },
+   "f1_non-motorized_vehicle": {
+    "delta": -0.002587651202161312,
+    "ci95": [
+     -0.018000450450450574,
+     0.013070746987615104
+    ],
+    "significativo": false
+   },
+   "f1_pedestrian": {
+    "delta": -0.0014089461776253254,
+    "ci95": [
+     -0.006100205807781073,
+     0.0031293797216004533
+    ],
+    "significativo": false
+   },
+   "f1_pickup_truck": {
+    "delta": 0.027167077526789818,
+    "ci95": [
+     0.01589877154983426,
+     0.03831091426389567
+    ],
+    "significativo": true
+   },
+   "f1_single_unit_truck": {
+    "delta": 0.013251218919787089,
+    "ci95": [
+     0.0045096385233243915,
+     0.021697844515197462
+    ],
+    "significativo": true
+   },
+   "f1_work_van": {
+    "delta": -0.0004441308717292314,
+    "ci95": [
+     -0.006841665009866632,
+     0.0057069165664862045
+    ],
+    "significativo": false
+   },
+   "mcnemar_accuracy": {
+    "b": 43,
+    "c": 74,
+    "p_value": 0.005319279348701672
+   },
+   "contraste_raras_f1": {
+    "classes_raras": [
+     "bicycle",
+     "motorcycle",
+     "non-motorized_vehicle"
+    ],
+    "delta": -0.009354620582470075,
+    "ci95": [
+     -0.016737908085178978,
+     -0.001830502082094104
+    ],
+    "significativo": true,
+    "prob_raras_perdem_mais": 0.9925
+   }
+  },
+  "exp3_l1_60_s1": {
+   "f1_macro": {
+    "delta": -0.00632810277087692,
+    "ci95": [
+     -0.01076222990256305,
+     -0.001328480470881314
+    ],
+    "significativo": true
+   },
+   "accuracy": {
+    "delta": -0.005095355947008273,
+    "ci95": [
+     -0.009462803901586825,
+     -0.0004367447954578524
+    ],
+    "significativo": true
+   },
+   "recall_articulated_truck": {
+    "delta": 0.010767160161507361,
+    "ci95": [
+     -0.005673960348162485,
+     0.028288543140028266
+    ],
+    "significativo": false
+   },
+   "recall_background": {
+    "delta": -0.009333333333333305,
+    "ci95": [
+     -0.01781398254622127,
+     -0.002525172914517249
+    ],
+    "significativo": true
+   },
+   "recall_bicycle": {
+    "delta": -0.04398826979472137,
+    "ci95": [
+     -0.06686068601116846,
+     -0.02285714285714291
+    ],
+    "significativo": true
+   },
+   "recall_bus": {
+    "delta": -0.009345794392523366,
+    "ci95": [
+     -0.021390879456889212,
+     0.001402672698180695
+    ],
+    "significativo": false
+   },
+   "recall_car": {
+    "delta": -0.00669344042838016,
+    "ci95": [
+     -0.019802307179198782,
+     0.0068875279667595215
+    ],
+    "significativo": false
+   },
+   "recall_motorcycle": {
+    "delta": 0.006756756756756688,
+    "ci95": [
+     -0.009288646808837947,
+     0.023491910152983988
+    ],
+    "significativo": false
+   },
+   "recall_non-motorized_vehicle": {
+    "delta": -0.019230769230769273,
+    "ci95": [
+     -0.045775319858079824,
+     0.0072497192363228085
+    ],
+    "significativo": false
+   },
+   "recall_pedestrian": {
+    "delta": -0.004005340453938633,
+    "ci95": [
+     -0.011968483511346623,
+     0.0038661040904555905
+    ],
+    "significativo": false
+   },
+   "recall_pickup_truck": {
+    "delta": 0.03217158176943702,
+    "ci95": [
+     0.013293509521416239,
+     0.05111458209221964
+    ],
+    "significativo": true
+   },
+   "recall_single_unit_truck": {
+    "delta": -0.012113055181695809,
+    "ci95": [
+     -0.02564450474898238,
+     0.0013551056026865232
+    ],
+    "significativo": false
+   },
+   "recall_work_van": {
+    "delta": -0.024161073825503365,
+    "ci95": [
+     -0.039999999999999925,
+     -0.009395973154362466
+    ],
+    "significativo": true
+   },
+   "precision_articulated_truck": {
+    "delta": -0.03006312185728044,
+    "ci95": [
+     -0.04753108389734081,
+     -0.014363177295877327
+    ],
+    "significativo": true
+   },
+   "precision_background": {
+    "delta": 0.007629624135044311,
+    "ci95": [
+     0.0010602604268626996,
+     0.015308312959615385
+    ],
+    "significativo": true
+   },
+   "precision_bicycle": {
+    "delta": 0.005360379801467419,
+    "ci95": [
+     -0.013439890551881542,
+     0.02483068825307962
+    ],
+    "significativo": false
+   },
+   "precision_bus": {
+    "delta": 0.0034501183396099533,
+    "ci95": [
+     -0.005811509042183846,
+     0.013032507019463572
+    ],
+    "significativo": false
+   },
+   "precision_car": {
+    "delta": -0.0075635575560556445,
+    "ci95": [
+     -0.023575775247313906,
+     0.00788123542235428
+    ],
+    "significativo": false
+   },
+   "precision_motorcycle": {
+    "delta": 0.0006124448799608162,
+    "ci95": [
+     -0.013475710659454274,
+     0.014156840035824535
+    ],
+    "significativo": false
+   },
+   "precision_non-motorized_vehicle": {
+    "delta": -0.03401967703100994,
+    "ci95": [
+     -0.0680625695756143,
+     -0.002816051664436091
+    ],
+    "significativo": true
+   },
+   "precision_pedestrian": {
+    "delta": -0.014192273135669287,
+    "ci95": [
+     -0.02560323530346953,
+     -0.003978610895868375
+    ],
+    "significativo": true
+   },
+   "precision_pickup_truck": {
+    "delta": -0.012056996711728218,
+    "ci95": [
+     -0.02720906652859257,
+     0.002633987227925062
+    ],
+    "significativo": false
+   },
+   "precision_single_unit_truck": {
+    "delta": -0.0009353392134409111,
+    "ci95": [
+     -0.01910916247619381,
+     0.01642486559634165
+    ],
+    "significativo": false
+   },
+   "precision_work_van": {
+    "delta": 0.012627370679147765,
+    "ci95": [
+     -0.002385466248887516,
+     0.028760393180128796
+    ],
+    "significativo": false
+   },
+   "f1_articulated_truck": {
+    "delta": -0.009461695849519614,
+    "ci95": [
+     -0.02196397771931254,
+     0.0032371997124444832
+    ],
+    "significativo": false
+   },
+   "f1_background": {
+    "delta": -0.0008239334049181535,
+    "ci95": [
+     -0.006296956925170891,
+     0.004601736478587419
+    ],
+    "significativo": false
+   },
+   "f1_bicycle": {
+    "delta": -0.019356005788712105,
+    "ci95": [
+     -0.03618091679863669,
+     -0.004429955415222493
+    ],
+    "significativo": true
+   },
+   "f1_bus": {
+    "delta": -0.0030427688110770124,
+    "ci95": [
+     -0.01078566303265254,
+     0.004667172558343831
+    ],
+    "significativo": false
+   },
+   "f1_car": {
+    "delta": -0.007146553593536331,
+    "ci95": [
+     -0.018165826582515143,
+     0.004116204958198704
+    ],
+    "significativo": false
+   },
+   "f1_motorcycle": {
+    "delta": 0.0035159620362380517,
+    "ci95": [
+     -0.007705330588453335,
+     0.014865230356626034
+    ],
+    "significativo": false
+   },
+   "f1_non-motorized_vehicle": {
+    "delta": -0.025565636444297435,
+    "ci95": [
+     -0.04827593466994904,
+     -0.0030775137363326967
+    ],
+    "significativo": true
+   },
+   "f1_pedestrian": {
+    "delta": -0.009078263219521654,
+    "ci95": [
+     -0.01613270884573436,
+     -0.00260225573981768
+    ],
+    "significativo": true
+   },
+   "f1_pickup_truck": {
+    "delta": 0.012737748090447698,
+    "ci95": [
+     -0.0009527569447963651,
+     0.02651551944542315
+    ],
+    "significativo": false
+   },
+   "f1_single_unit_truck": {
+    "delta": -0.005935417410719457,
+    "ci95": [
+     -0.018367136658603747,
+     0.006525339079050185
+    ],
+    "significativo": false
+   },
+   "f1_work_van": {
+    "delta": -0.005452566084029553,
+    "ci95": [
+     -0.016921196097992433,
+     0.005868233572081885
+    ],
+    "significativo": false
+   },
+   "mcnemar_accuracy": {
+    "b": 144,
+    "c": 109,
+    "p_value": 0.03234760563870569
+   },
+   "contraste_raras_f1": {
+    "classes_raras": [
+     "bicycle",
+     "motorcycle",
+     "non-motorized_vehicle"
+    ],
+    "delta": -0.01027646211356457,
+    "ci95": [
+     -0.021261892257870934,
+     -0.00020186912425795237
+    ],
+    "significativo": true,
+    "prob_raras_perdem_mais": 0.9765
+   }
+  },
+  "exp4_l1_90_s1": {
+   "f1_macro": {
+    "delta": -0.04115494387364471,
+    "ci95": [
+     -0.04913443742996107,
+     -0.03309737095868273
+    ],
+    "significativo": true
+   },
+   "accuracy": {
+    "delta": -0.04119959237152426,
+    "ci95": [
+     -0.04847867229582181,
+     -0.0339205124472266
+    ],
+    "significativo": true
+   },
+   "recall_articulated_truck": {
+    "delta": -0.010767160161507361,
+    "ci95": [
+     -0.03586203526442567,
+     0.013315579227696332
+    ],
+    "significativo": false
+   },
+   "recall_background": {
+    "delta": -0.02400000000000002,
+    "ci95": [
+     -0.03688524590163933,
+     -0.012562551249973717
+    ],
+    "significativo": true
+   },
+   "recall_bicycle": {
+    "delta": -0.07917888563049846,
+    "ci95": [
+     -0.11048270463694654,
+     -0.04735047199009591
+    ],
+    "significativo": true
+   },
+   "recall_bus": {
+    "delta": -0.025367156208277675,
+    "ci95": [
+     -0.04255538646141234,
+     -0.009184557496719191
+    ],
+    "significativo": true
+   },
+   "recall_car": {
+    "delta": -0.04283801874163318,
+    "ci95": [
+     -0.06452168310672704,
+     -0.021679612655999183
+    ],
+    "significativo": true
+   },
+   "recall_motorcycle": {
+    "delta": 0.0,
+    "ci95": [
+     -0.028070175438596467,
+     0.02760921943660183
+    ],
+    "significativo": false
+   },
+   "recall_non-motorized_vehicle": {
+    "delta": -0.03846153846153855,
+    "ci95": [
+     -0.08502024291497978,
+     0.008474576271186422
+    ],
+    "significativo": false
+   },
+   "recall_pedestrian": {
+    "delta": -0.024032042723631575,
+    "ci95": [
+     -0.041334482758620686,
+     -0.008409686616237071
+    ],
+    "significativo": true
+   },
+   "recall_pickup_truck": {
+    "delta": -0.12198391420911525,
+    "ci95": [
+     -0.15487457455010434,
+     -0.08990049961893475
+    ],
+    "significativo": true
+   },
+   "recall_single_unit_truck": {
+    "delta": -0.04037685060565277,
+    "ci95": [
+     -0.061936683551053015,
+     -0.018079445896977242
+    ],
+    "significativo": true
+   },
+   "recall_work_van": {
+    "delta": -0.04026845637583898,
+    "ci95": [
+     -0.06392326062051032,
+     -0.016686965475376347
+    ],
+    "significativo": true
+   },
+   "precision_articulated_truck": {
+    "delta": -0.056717626772654905,
+    "ci95": [
+     -0.07966254002906159,
+     -0.033561134679873164
+    ],
+    "significativo": true
+   },
+   "precision_background": {
+    "delta": 0.007388884407517948,
+    "ci95": [
+     -0.0018329054653487859,
+     0.01653779584534409
+    ],
+    "significativo": false
+   },
+   "precision_bicycle": {
+    "delta": 0.001155396327810032,
+    "ci95": [
+     -0.03105578784301968,
+     0.030455886199126463
+    ],
+    "significativo": false
+   },
+   "precision_bus": {
+    "delta": -0.020552672940225114,
+    "ci95": [
+     -0.036500964797809794,
+     -0.005369895829952681
+    ],
+    "significativo": true
+   },
+   "precision_car": {
+    "delta": -0.0173422123261312,
+    "ci95": [
+     -0.04010161884037452,
+     0.0056711262170229095
+    ],
+    "significativo": false
+   },
+   "precision_motorcycle": {
+    "delta": -0.04409005628517826,
+    "ci95": [
+     -0.07701505376657554,
+     -0.01109145206767826
+    ],
+    "significativo": true
+   },
+   "precision_non-motorized_vehicle": {
+    "delta": -0.09053179236665476,
+    "ci95": [
+     -0.1443111541952535,
+     -0.03948965003191507
+    ],
+    "significativo": true
+   },
+   "precision_pedestrian": {
+    "delta": -0.017940803212557643,
+    "ci95": [
+     -0.03373189644375289,
+     -0.002227229894943114
+    ],
+    "significativo": true
+   },
+   "precision_pickup_truck": {
+    "delta": -0.0833731485905399,
+    "ci95": [
+     -0.10780809822621701,
+     -0.057869730284142405
+    ],
+    "significativo": true
+   },
+   "precision_single_unit_truck": {
+    "delta": -0.09401641682248918,
+    "ci95": [
+     -0.1186821301218623,
+     -0.06864424863387439
+    ],
+    "significativo": true
+   },
+   "precision_work_van": {
+    "delta": -0.026987852249213518,
+    "ci95": [
+     -0.04777615356244384,
+     -0.006622996730633495
+    ],
+    "significativo": true
+   },
+   "f1_articulated_truck": {
+    "delta": -0.03360407737244098,
+    "ci95": [
+     -0.052061852219699174,
+     -0.015435168965006858
+    ],
+    "significativo": true
+   },
+   "f1_background": {
+    "delta": -0.008369982127437448,
+    "ci95": [
+     -0.01664005189359053,
+     -0.0005967552465342339
+    ],
+    "significativo": true
+   },
+   "f1_bicycle": {
+    "delta": -0.03981055124325761,
+    "ci95": [
+     -0.06377989000163681,
+     -0.016579979914255607
+    ],
+    "significativo": true
+   },
+   "f1_bus": {
+    "delta": -0.02298639338118713,
+    "ci95": [
+     -0.036206887216884906,
+     -0.011373238275815833
+    ],
+    "significativo": true
+   },
+   "f1_car": {
+    "delta": -0.02982308170382264,
+    "ci95": [
+     -0.04681030089911967,
+     -0.011570835754237776
+    ],
+    "significativo": true
+   },
+   "f1_motorcycle": {
+    "delta": -0.02378542510121462,
+    "ci95": [
+     -0.048345642283455253,
+     -0.0012591035513164724
+    ],
+    "significativo": true
+   },
+   "f1_non-motorized_vehicle": {
+    "delta": -0.06100605885009669,
+    "ci95": [
+     -0.10027621993050796,
+     -0.02286794128650555
+    ],
+    "significativo": true
+   },
+   "f1_pedestrian": {
+    "delta": -0.02102611180767877,
+    "ci95": [
+     -0.03338445440104812,
+     -0.009800846182520249
+    ],
+    "significativo": true
+   },
+   "f1_pickup_truck": {
+    "delta": -0.1070507879410757,
+    "ci95": [
+     -0.1313677933211948,
+     -0.0835894672175022
+    ],
+    "significativo": true
+   },
+   "f1_single_unit_truck": {
+    "delta": -0.0718121297712766,
+    "ci95": [
+     -0.09113493652570974,
+     -0.05213325799804806
+    ],
+    "significativo": true
+   },
+   "f1_work_van": {
+    "delta": -0.0334297833106032,
+    "ci95": [
+     -0.05057498028701052,
+     -0.01618340457181825
+    ],
+    "significativo": true
+   },
+   "mcnemar_accuracy": {
+    "b": 484,
+    "c": 201,
+    "p_value": 7.787929816084966e-28
+   },
+   "contraste_raras_f1": {
+    "classes_raras": [
+     "bicycle",
+     "motorcycle",
+     "non-motorized_vehicle"
+    ],
+    "delta": -0.0005212183045826616,
+    "ci95": [
+     -0.019682930199314202,
+     0.018218546911543565
+    ],
+    "significativo": false,
+    "prob_raras_perdem_mais": 0.515
+   }
+  },
   "exp5_struct_mask_50_s1": {
    "f1_macro": {
     "delta": -0.04689731677085762,
