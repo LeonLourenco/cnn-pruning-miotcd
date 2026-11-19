@@ -21,11 +21,11 @@ Se o tempo apertar, a ordem de corte é: sementes extras (D-04) → gráficos al
 | ID | Demanda | Responsável | Status | Depende de |
 |---|---|---|---|---|
 | D-01 | **Definir e implementar a poda L1 não estruturada**: escopo global ou por camada; camadas excluídas; registrar em `configs/default.yaml` e `docs/SPEC.md` (seção 6); implementar `src/pruning/unstructured.py` seguindo o contrato do arquivo. **Decisão:** L1 global, ignora conv1 e fc (mesmo critério da estruturada), decidido por Leon e Gabriel; registrado em `configs/default.yaml` e `docs/SPEC.md` (seção 6) | Gabriel | fechada | — |
-| D-02 | Informar o modelo da GPU do desktop do Gabriel e a versão do PyTorch usada | Gabriel | aberta | — |
-| D-04 | Rodar sementes 1 e 2 em todos os experimentos (média ± desvio) | Ambos | parcial: Exp 1, 5 e 6 prontos nas 3 sementes (18/11); baselines s1 e s2 na Release; faltam os Exp 2-4 | D-09 |
+| D-02 | Informar o modelo da GPU do desktop do Gabriel e a versão do PyTorch usada. **Resposta:** NVIDIA GeForce RTX 3050 6 GB, PyTorch 2.11.0, CUDA 12.8 | Gabriel | fechada | — |
+| D-04 | Rodar sementes 1 e 2 em todos os experimentos (média ± desvio) | Ambos | fechada: os 6 experimentos nas 3 sementes (19/11) | D-09 |
 | D-13 | **Gabriel:** dar `git pull` (split v2, auditoria, testes, métricas efetivas e predições por imagem) e rodar `python -m pytest` antes de continuar; usar o baseline novo quando D-06 for feita. O código da poda L1 não é afetado | Gabriel | aberta | — |
 | D-08 | Benchmark de latência dos 6 modelos no notebook do Leon (Windows nativo) | Leon | aberta | D-09 |
-| D-09 | Rodar Exp 2, 3 e 4 no próprio computador (o notebook do Kaggle é opcional) | Gabriel | aberta | D-01, D-06 |
+| D-09 | Rodar Exp 2, 3 e 4 no próprio computador (o notebook do Kaggle é opcional) | Gabriel | fechada: sementes 0, 1 e 2 (19/11) | D-01, D-06 |
 | D-10 | `scripts/aggregate_results.py` com todos os resultados | Leon | aberta | D-08 |
 | D-11 | Gráficos: compressão × F1-macro; recall das classes raras × intensidade de poda; latência × tamanho | Ambos | aberta | D-10 |
 | D-12 | Slides: problema e base, auditoria dos dados, metodologia, resultados, limitações, conclusão | Ambos | aberta | D-10 |
